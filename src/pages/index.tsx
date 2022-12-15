@@ -1,12 +1,10 @@
-import { ComponentWithLayout } from '../types/AppPropsWithLayout';
 import { Inter } from '@next/font/google';
-import { getNavbarLayout } from '../layouts/NavbarLayout';
 import ExportedImage from 'next-image-export-optimizer';
 import styles from '../styles/Home.module.css';
 
 const inter = Inter({ subsets: ['latin'] });
 
-const Home: ComponentWithLayout = () => {
+const Home = () => {
   return (
     <>
       <main className={styles.main}>
@@ -116,8 +114,5 @@ const Home: ComponentWithLayout = () => {
     </>
   );
 };
-
-Home.getLayout = getNavbarLayout;
-Home.pageTitle = 'Login';
 
 export default Home;
