@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "export": "next build && next export && next-image-export-optimizer"
   },
   "dependencies": {
     "@next/font": "13.0.7",
@@ -17,6 +18,7 @@
     "eslint-config-next": "13.0.7",
     "eslint-plugin-sort-imports-es6-autofix": "^0.6.0",
     "next": "13.0.7",
+    "next-image-export-optimizer": "^1.1.0",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "typescript": "4.9.4"

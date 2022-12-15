@@ -1,7 +1,7 @@
 import { ComponentWithLayout } from '../types/AppPropsWithLayout';
 import { Inter } from '@next/font/google';
 import { getNavbarLayout } from '../layouts/NavbarLayout';
-import Image from 'next/image';
+import ExportedImage from 'next-image-export-optimizer';
 import styles from '../styles/Home.module.css';
 
 const inter = Inter({ subsets: ['latin'] });
@@ -22,7 +22,7 @@ const Home: ComponentWithLayout = () => {
               rel="noopener noreferrer"
             >
               By{' '}
-              <Image
+              <ExportedImage
                 src="/vercel.svg"
                 alt="Vercel Logo"
                 className={styles.vercelLogo}
@@ -35,7 +35,7 @@ const Home: ComponentWithLayout = () => {
         </div>
 
         <div className={styles.center}>
-          <Image
+          <ExportedImage
             className={styles.logo}
             src="/next.svg"
             alt="Next.js Logo"
@@ -44,7 +44,7 @@ const Home: ComponentWithLayout = () => {
             priority
           />
           <div className={styles.thirteen}>
-            <Image
+            <ExportedImage
               src="/thirteen.svg"
               alt="13"
               width={40}
