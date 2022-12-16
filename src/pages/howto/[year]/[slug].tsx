@@ -66,7 +66,7 @@ const createPageFromMarkdown = (year: string, slug: string) => {
     'utf-8',
   );
   const { data, content } = matter(markdownFile);
-  // md().render(content);
+
   const pageContent = unified()
     .use(remarkParse)
     .use(remarkGfm)
