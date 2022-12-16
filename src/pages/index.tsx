@@ -1,5 +1,10 @@
 const Home = () => {
-  return <div className={'top-10'}>test</div>;
+  return (
+    <div>
+      HOMEHOMEHOMEHOMEHOMEHOMEHOMEHOMEHOMEHOMEHOMEHO
+      MEHOMEHOMEHOMEHOMEHOMEHOMEHOMEHOMEHOMEHOMEHOMEHOMEHOMEHOMEHOMEHOMEHOMEHOME
+    </div>
+  );
 };
 
 export default Home;
