@@ -30,9 +30,10 @@ const HowToPage: NextPage<HowToPageProps> = ({ metadata, pageContent }) => {
       <Head>
         <title>{metadata.title}</title>
       </Head>
-      <div className="prose">
-        <article dangerouslySetInnerHTML={{ __html: pageContent }} />
-      </div>
+      <article
+        className="prose mx-auto"
+        dangerouslySetInnerHTML={{ __html: pageContent }}
+      />
     </>
   );
 };
@@ -71,7 +72,7 @@ const createPageFromMarkdown = (year: string, slug: string) => {
     .use(remarkGfm)
     .use(remarkRehype)
     .use(rehypeSlug)
-    .use(rehypeAutolinkHeadings)
+    .use(rehypeAutolinkHeadings, { behavior: 'wrap' })
     .use(rehypeToc)
     .use(rehypeHighlight)
     .use(rehypeStringify)
