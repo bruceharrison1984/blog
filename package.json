@@ -14,19 +14,30 @@
     "@types/node": "18.11.15",
     "@types/react": "18.0.26",
     "@types/react-dom": "18.0.9",
-    "eslint": "8.29.0",
-    "eslint-config-next": "13.0.7",
-    "eslint-plugin-sort-imports-es6-autofix": "^0.6.0",
-    "gray-matter": "^4.0.3",
     "next": "13.0.7",
-    "next-image-export-optimizer": "^1.1.0",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "typescript": "4.9.4"
   },
   "devDependencies": {
+    "@jsdevtools/rehype-toc": "^3.0.2",
+    "eslint": "8.29.0",
+    "eslint-config-next": "13.0.7",
+    "eslint-plugin-sort-imports-es6-autofix": "^0.6.0",
+    "@types/recursive-readdir": "^2.2.1",
     "autoprefixer": "^10.4.13",
     "postcss": "^8.4.20",
-    "tailwindcss": "^3.2.4"
+    "tailwindcss": "^3.2.4",
+    "recursive-readdir": "^2.2.3",
+    "rehype-autolink-headings": "^6.1.1",
+    "rehype-highlight": "^6.0.0",
+    "rehype-slug": "^5.1.0",
+    "rehype-stringify": "^9.0.3",
+    "remark-gfm": "^3.0.1",
+    "remark-parse": "^10.0.1",
+    "remark-rehype": "^10.1.0",
+    "next-image-export-optimizer": "^1.1.0",
+    "unified": "^10.1.2",
+    "gray-matter": "^4.0.3"
   }
 }
