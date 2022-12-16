@@ -5,6 +5,7 @@ import {
   NextPage,
 } from 'next';
 import { unified } from 'unified';
+import Head from 'next/head';
 import fs from 'fs';
 import matter from 'gray-matter';
 import recursiveRead from 'recursive-readdir';
@@ -16,18 +17,23 @@ import rehypeToc from '@jsdevtools/rehype-toc';
 import remarkGfm from 'remark-gfm';
 import remarkParse from 'remark-parse';
 import remarkRehype from 'remark-rehype';
-// import md from 'markdown-it';
 
 type HowToPageProps = {
   metadata: Record<string, string>;
   pageContent: string;
 };
 
-const HowToPage: NextPage<HowToPageProps> = ({ pageContent }) => {
+const HowToPage: NextPage<HowToPageProps> = ({ metadata, pageContent }) => {
+  console.log(metadata);
   return (
-    <div className="">
-      <article dangerouslySetInnerHTML={{ __html: pageContent }} />
-    </div>
+    <>
+      <Head>
+        <title>{metadata.title}</title>
+      </Head>
+      <div className="prose">
+        <article dangerouslySetInnerHTML={{ __html: pageContent }} />
+      </div>
+    </>
   );
 };
 
