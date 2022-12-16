@@ -16,6 +16,7 @@ import rehypeToc from '@jsdevtools/rehype-toc';
 import remarkGfm from 'remark-gfm';
 import remarkParse from 'remark-parse';
 import remarkRehype from 'remark-rehype';
+// import md from 'markdown-it';
 
 type HowToPageProps = {
   metadata: Record<string, string>;
@@ -23,7 +24,11 @@ type HowToPageProps = {
 };
 
 const HowToPage: NextPage<HowToPageProps> = ({ pageContent }) => {
-  return <article dangerouslySetInnerHTML={{ __html: pageContent }} />;
+  return (
+    <div className="">
+      <article dangerouslySetInnerHTML={{ __html: pageContent }} />
+    </div>
+  );
 };
 
 export const getStaticProps: GetStaticProps<
@@ -54,6 +59,7 @@ const createPageFromMarkdown = (year: string, slug: string) => {
     'utf-8',
   );
   const { data, content } = matter(markdownFile);
+  // md().render(content);
   const pageContent = unified()
     .use(remarkParse)
     .use(remarkGfm)
@@ -66,7 +72,7 @@ const createPageFromMarkdown = (year: string, slug: string) => {
     .processSync(content)
     .toString();
 
-  return { metadata: data, pageContent };
+  return { metadata: data, pageContent: pageContent };
 };
 
 export default HowToPage;
