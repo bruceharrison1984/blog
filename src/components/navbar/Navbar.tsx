@@ -2,8 +2,10 @@ import Link from 'next/link';
 
 export const Navbar = () => {
   return (
-    <nav className="navbar fixed shadow-lg bg-neutral text-neutral-content border-base-content border border-opacity-30 py-0 px-1 top-0">
-      <div className="flex-1">BLH</div>
+    <nav className="navbar fixed shadow-lg bg-neutral text-neutral-content border-base-content border border-opacity-30 p-0 pl-5 top-0">
+      <div className="flex-1">
+        <Link href="/">BLH</Link>
+      </div>
 
       <div className="flex-none">
         <div className="dropdown dropdown-end">

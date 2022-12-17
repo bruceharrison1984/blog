@@ -1,10 +1,5 @@
 const HowToPage = () => {
-  return (
-    <div>
-      HOMEHOMEHOMEHOMEHOMEHOMEHOMEHOMEHOMEHOMEHOMEHO
-      MEHOMEHOMEHOMEHOMEHOMEHOMEHOMEHOMEHOMEHOMEHOMEHOMEHOMEHOMEHOMEHOMEHOMEHOME
-    </div>
-  );
+  return <div>HOW TO</div>;
 };
 
 export default HowToPage;

@@ -15,10 +15,7 @@ const HowToPage: NextPage<HowToPageProps> = ({ metadata, pageContent }) => (
     <Head>
       <title>{metadata.title}</title>
     </Head>
-    <article
-      className="prose mx-auto"
-      dangerouslySetInnerHTML={{ __html: pageContent }}
-    />
+    <article dangerouslySetInnerHTML={{ __html: pageContent }} />
   </>
 );
 
