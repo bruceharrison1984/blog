@@ -30,7 +30,7 @@ export const createPageFromMarkdown = (
   );
   const { data, content } = matter(markdownFile);
 
-  const pageContent = unified()
+  let pageContent = unified()
     .use(remarkParse)
     .use(remarkGfm)
     .use(remarkRehype)
@@ -42,5 +42,8 @@ export const createPageFromMarkdown = (
     .processSync(content)
     .toString();
 
-  return { metadata: data, pageContent: pageContent };
+  const match = pageContent.match('(<nav class="toc">.*</nav>)');
+  pageContent = pageContent.replace(match![0], '');
+
+  return { metadata: data, pageContent: pageContent, toc: match![0] };
 };
