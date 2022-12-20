@@ -5,9 +5,7 @@ export const NavbarLayout = ({ children }: { children: ReactNode }) => {
   return (
     <>
       <Navbar />
-      <main className="max-w-screen">
-        <main className="mt-24 px-6">{children}</main>
-      </main>
+      <main className="mt-20 px-6">{children}</main>
     </>
   );
 };

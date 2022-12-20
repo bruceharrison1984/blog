@@ -20,14 +20,14 @@ const HowToPage: NextPage<HowToPageProps> = ({
     <Head>
       <title>{metadata.title}</title>
     </Head>
-    <div className="flex">
-      <nav
-        className="prose-sm pr-2 hidden md:flex"
-        dangerouslySetInnerHTML={{ __html: toc }}
-      />
+    <div className="flex justify-center">
       <article
-        className="flex-1 prose max-w-[100] text-sm"
+        className="prose-sm md:prose"
         dangerouslySetInnerHTML={{ __html: pageContent }}
+      />
+      <nav
+        className="prose pr-5 hidden lg:flex text-sm"
+        dangerouslySetInnerHTML={{ __html: toc }}
       />
     </div>
   </>
