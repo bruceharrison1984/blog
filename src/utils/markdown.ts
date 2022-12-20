@@ -1,3 +1,4 @@
+import { DocumentMetadata } from '@/types/DocumentMetadata';
 import { unified } from 'unified';
 import fs from 'fs';
 import matter from 'gray-matter';
@@ -18,6 +19,21 @@ export const recursivelyGetMarkdownFiles = async (
   (await recursiveRead([baseDir, directoryPath].join('/'))).map((x) =>
     x.replace('.md', '').replace(baseDir, '').replaceAll('\\', '/'),
   );
+
+export const recursivelyGetMetadata = async (
+  directoryPath: string,
+  baseDir = 'content',
+) => {
+  const files = await recursivelyGetMarkdownFiles(directoryPath, baseDir);
+  const metadata = await Promise.all(
+    files.map((file) => {
+      const markdownFile = fs.readFileSync(`${[baseDir, file].join('/')}.md`);
+      const { data } = matter(markdownFile);
+      return data as DocumentMetadata;
+    }),
+  );
+  return metadata;
+};
 
 export const createPageFromMarkdown = (
   directoryPath: string,

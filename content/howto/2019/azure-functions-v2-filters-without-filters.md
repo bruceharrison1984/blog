@@ -117,4 +117,4 @@ This same idea could also be applied to many other ASP.net niceties we take for 
 - Injecting User Context
 - Sending all requests to a message bus
 
-By pulling standard actions out we can expose the core functionality
+By pulling standard actions out we can expose the core functionality of our Azure Function, while at the same time consolidating shared logic in one place. It's a win-win!
