@@ -2,6 +2,7 @@
 title: 'Azure V2 Functions - FluentValidation'
 metaTitle: 'Azure V2 Functions - FluentValidation'
 metaDesc: 'How to use Fluent Validation within Azure V2 Functions'
+legacyUrl: https://blog.bruceleeharrison.com/2019/08/29/azure-function-filters/
 socialImage: images/22-09-2021.jpg
 date: '2021-09-22'
 tags:

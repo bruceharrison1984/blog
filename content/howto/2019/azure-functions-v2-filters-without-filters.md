@@ -2,6 +2,7 @@
 title: 'Azure Functions V2 - Filters (without Filters)'
 metaTitle: 'Azure Functions V2 - Filters (without Filters)'
 metaDesc: 'How to use pages in Next.js exploring the options'
+legacyUrl: https://blog.bruceleeharrison.com/2019/09/04/azure-v2-functions-with-fluentvalidation/
 socialImage: images/22-09-2021.jpg
 date: '2021-09-22'
 tags:

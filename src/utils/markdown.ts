@@ -29,6 +29,7 @@ export const recursivelyGetMetadata = async (
     files.map((file) => {
       const markdownFile = fs.readFileSync(`${[baseDir, file].join('/')}.md`);
       const { data } = matter(markdownFile);
+      data.currentUrl = file;
       return data as DocumentMetadata;
     }),
   );
