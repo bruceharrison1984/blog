@@ -3,7 +3,7 @@ title: Get an Azure Service Principal Token With (Almost) One-Line in PowerShell
 metaDesc: A short and sweet way to retrieve an Azure SP token
 legacyUrl: https://blog.bruceleeharrison.com/2020/05/05/get-an-azure-service-principal-token-with-almost-one-line-in-powershell/
 headerImage: /images/azure_synapse.jpg
-date: '2020-05-05'
+date: 2020/05/05
 tags:
   - azure
   - powershell

@@ -3,7 +3,7 @@ title: AWS ECS/Fargate Bastion Host
 metaDesc: An elaborate experiment to see how viable using ECS/Fargate for a persistent bastion host really is
 legacyUrl: https://blog.bruceleeharrison.com/2021/03/02/aws-ecs-fargate-bastion-host/
 headerImage: /images/azure_synapse.jpg
-date: '2021/03/02'
+date: 2021/03/02
 tags:
   - azure
   - powershell

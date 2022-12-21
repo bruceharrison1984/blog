@@ -3,7 +3,7 @@ title: Running a DACPAC On Azure Synapse From a DevOps-Hosted Agent
 metaDesc: We recently needed to run a DACPAC against a Synapse Warehouse. Locally running the DACPAC against Synapse worked fine, but broke as soon as we tried to use our DevOps CI/CD pipeline.
 legacyUrl: https://blog.bruceleeharrison.com/2020/05/05/running-a-dacpac-on-azure-synapse-from-a-devops-hosted-agent/
 headerImage: /bruceharrison1984/images/azure_synapse.jpg
-date: '2020-05-05'
+date: 2020/05/05
 tags:
   - azure
   - powershell
