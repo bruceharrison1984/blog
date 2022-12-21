@@ -26,7 +26,7 @@ const HowToPage: NextPage<HowToPageProps> = ({
         dangerouslySetInnerHTML={{ __html: pageContent }}
       />
       <nav
-        className="prose pr-5 hidden lg:flex text-sm"
+        className="prose-sm pr-5 hidden lg:flex"
         dangerouslySetInnerHTML={{ __html: toc }}
       />
     </div>
