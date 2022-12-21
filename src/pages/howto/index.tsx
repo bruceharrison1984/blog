@@ -16,14 +16,16 @@ const HowToPage: NextPage<HowToPageProps> = ({ metadata }) => {
           key={data.title}
           className="card card-bordered lg:card-side bg-base-100 shadow-xl mx-auto w-full md:w-2/3 xl:w-3/5"
         >
-          <figure className="p-3">
-            <Image
-              src="/images/azure_functions.png"
-              alt="azure function logo"
-              width={100}
-              height={100}
-            />
-          </figure>
+          {data.headerImage && (
+            <figure className="p-3">
+              <Image
+                src={data.headerImage}
+                alt="post_image"
+                width={100}
+                height={100}
+              />
+            </figure>
+          )}
           <Link href={data.currentUrl}>
             <div className="card-body">
               <h2 className="card-title">{data.title}</h2>
