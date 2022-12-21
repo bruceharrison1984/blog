@@ -6,7 +6,7 @@ headerImage: /images/azure_synapse.jpg
 date: '2020-05-05'
 tags:
   - azure
-  - c#
+  - powershell
 ---
 
 # Get an Azure Service Principal Token With (Almost) One-Line in PowerShell
