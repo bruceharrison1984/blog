@@ -1,4 +1,5 @@
 import { DocumentMetadata } from '@/types/DocumentMetadata';
+import { definer as terraform } from './rehype-terraform';
 import { unified } from 'unified';
 import fs from 'fs';
 import matter from 'gray-matter';
@@ -54,7 +55,7 @@ export const createPageFromMarkdown = (
     .use(rehypeSlug)
     .use(rehypeAutolinkHeadings, { behavior: 'wrap' })
     .use(rehypeToc)
-    .use(rehypeHighlight)
+    .use(rehypeHighlight, { languages: { tf: terraform } })
     .use(rehypeStringify)
     .processSync(content)
     .toString();

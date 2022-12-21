@@ -51,7 +51,7 @@ We will handle authentication in to our SSH server with certificates. Our contai
 
 So now we have everything we need to get secure login, but now we need our container to know about it. The next step is to allow the ECS Task to access those particular Secrets and read them, and inject the values as environment variables in to our container. The [linuxserver/openssh-server](https://github.com/linuxserver/docker-openssh-server) does most of the heavy lifting here, so kudos to the developers of it.
 
-```terraform
+```tf
 resource "aws_ecs_task_definition" "bastion" {
   family                   = "${var.base_name}-bastion-task"
   network_mode             = "awsvpc"
