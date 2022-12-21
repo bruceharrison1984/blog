@@ -17,7 +17,7 @@ I ran across many different ways to get an Access Token for an Azure Service Pri
 
 So after reading through a bunch of blog posts and comparing scripts, I am happy to present to you the simplest way to retrieve an Access Token for an Azure Service Principal (in PowerShell):
 
-```
+```powershell
 $Fields = @{
   grant_type    = "client_credentials"
   client_id     = "<service-principal-id>"

@@ -23,7 +23,7 @@ Well complain no longer, the Terraform.io API makes this a snap. The following P
 
 Pass those three items in to the script and you’ll get back a dictionary of the outputs for the specified environment. The only prerequisite is that your are using Terraform.io to hold your state files.
 
-```
+```powershell
 param(
   [string]$workspaceName = $(throw "Please specify a workspace name"),
   [string]$organizationName = $(throw "Please specify an organization name"),

@@ -1,4 +1,5 @@
 import { DocumentMetadata } from '@/types/DocumentMetadata';
+import { definer as powershell } from './rehype-powershell';
 import { definer as terraform } from './rehype-terraform';
 import { unified } from 'unified';
 import fs from 'fs';
@@ -55,7 +56,9 @@ export const createPageFromMarkdown = (
     .use(rehypeSlug)
     .use(rehypeAutolinkHeadings, { behavior: 'wrap' })
     .use(rehypeToc)
-    .use(rehypeHighlight, { languages: { tf: terraform } })
+    .use(rehypeHighlight, {
+      languages: { tf: terraform, powershell: powershell },
+    })
     .use(rehypeStringify)
     .processSync(content)
     .toString();

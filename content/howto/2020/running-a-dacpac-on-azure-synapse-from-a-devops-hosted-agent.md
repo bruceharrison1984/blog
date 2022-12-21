@@ -28,7 +28,7 @@ A quick Google search showed that the column types used in Synapse aren’t supp
 
 After a bit of sniffing around on the DevOps agent, I found that v19 of SqlPackage.exe is present, you just have to call it manually using Powershell(or whatever shell task you prefer).
 
-```
+```powershell
 $connectionString = "Server=*****.database.windows.net,1433;Database=*****;Trusted_Connection=False;Encrypt=True;Connection Timeout=30;"
 
 & "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\Extensions\Microsoft\SQLDB\DAC\150\sqlpackage.exe" /Action:Publish /SourceFile:"./deployment.dacpac" /TargetConnectionString:"$connectionString" /AccessToken:"<service-principal-access-token>" /Diagnostics:True
@@ -38,7 +38,7 @@ Once we switched to using this version of SqlPackage.exe, our DACPAC deployment 
 
 In this example we invoke SqlPackage with an Azure Service Principal, but you can also use username/password credentials. If using username/password, you can remove the AccessToken argument from the SqlPackage call, and change your connection string to resemble the following:
 
-```
+```powershell
 $connectionString = "Server=*****.database.windows.net,1433;Database=*****;Persist Security Info=False;User ID=<username@domain.com>;Password=<password>;Pooling=False;MultipleActiveResultSets=False;Connect Timeout=60;Encrypt=True;TrustServerCertificate=False;Authentication='Active Directory Password'"
 ```
 
