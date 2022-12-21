@@ -1,7 +1,7 @@
 ---
 title: 'Azure Functions V2 - Filters (without Filters)'
 metaTitle: 'Azure Functions V2 - Filters (without Filters)'
-metaDesc: 'How to use pages in Next.js exploring the options'
+metaDesc: Recently, I was tasked with building a fairly simple API using Azure Functions. Using VS2019, this is a trivial task because VS2019 comes with an Azure Function V2 project type. The addition of DI in V2 functions is also a major boon, because it finally gets rid of the code sprawl and duplication that previous lambda function competitors (I'm looking at you AWS) suffered from.
 legacyUrl: https://blog.bruceleeharrison.com/2019/09/04/azure-v2-functions-with-fluentvalidation/
 socialImage: images/22-09-2021.jpg
 date: '2021-09-22'
