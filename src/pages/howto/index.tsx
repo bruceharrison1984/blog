@@ -29,7 +29,7 @@ const HowToPage: NextPage<HowToPageProps> = ({ metadata }) => {
           <Link href={data.currentUrl}>
             <div className="card-body">
               <h2 className="card-title">{data.title}</h2>
-              <time className="text-sm">{data.date}</time>
+              <time className="text-sm">{data.date.toLocaleDateString()}</time>
               <p className="prose">{data.metaDesc}</p>
             </div>
           </Link>
@@ -39,7 +39,7 @@ const HowToPage: NextPage<HowToPageProps> = ({ metadata }) => {
   );
 };
 
-export const getStaticProps: GetStaticProps = async ({ params }) => {
+export const getStaticProps: GetStaticProps = async () => {
   return {
     props: { metadata: await recursivelyGetMetadata('howto') },
   };

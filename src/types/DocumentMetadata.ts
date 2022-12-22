@@ -1,8 +1,8 @@
 export type DocumentMetadata = {
   title: string;
-  metaDesc?: string;
+  metaDesc: string;
   headerImage?: string;
-  date?: string;
+  date: Date;
   tags?: string[];
   legacyUrl?: string;
   currentUrl: string;

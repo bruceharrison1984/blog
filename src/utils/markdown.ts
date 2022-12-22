@@ -35,7 +35,10 @@ export const recursivelyGetMetadata = async (
       return data as DocumentMetadata;
     }),
   );
-  return metadata;
+  const sortedMetadata = metadata
+    .sort((x, y) => x.date.valueOf() - y.date.valueOf())
+    .reverse();
+  return sortedMetadata;
 };
 
 export const createPageFromMarkdown = (

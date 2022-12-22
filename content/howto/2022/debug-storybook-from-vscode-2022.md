@@ -3,7 +3,7 @@ title: Debug Storybook from VSCode (2022)
 metaDesc: How to get VSCode working together with Storybook for effortless component debugging
 legacyUrl: https://blog.bruceleeharrison.com/2022/01/26/debug-storybook-from-vscode-2022/
 headerImage: /images/azure_synapse.jpg
-date: 2022/01/26
+date: !!timestamp '2022-01-26'
 tags:
   - vscode
   - storybook

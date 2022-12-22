@@ -3,7 +3,7 @@ title: 'Azure Functions V2 - Filters (without Filters)'
 metaDesc: Recently, I was tasked with building a fairly simple API using Azure Functions. Using VS2019, this is a trivial task because VS2019 comes with an Azure Function V2 project type. The addition of DI in V2 functions is also a major boon, because it finally gets rid of the code sprawl and duplication that previous lambda function competitors (I'm looking at you AWS) suffered from.
 legacyUrl: https://blog.bruceleeharrison.com/2019/09/04/azure-v2-functions-with-fluentvalidation/
 headerImage: /images/azure_functions.png
-date: 2019/10/28
+date: !!timestamp '2019-10-28'
 tags:
   - azure
   - c#

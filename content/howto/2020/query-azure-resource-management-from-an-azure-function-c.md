@@ -3,7 +3,7 @@ title: Query Azure Resource Management from an Azure Function (C#)
 metaDesc: This explains how to use the Azure Resource Management library for C# to query resources
 legacyUrl: https://blog.bruceleeharrison.com/2020/11/04/query-azure-resource-management-from-an-azure-function-c/
 headerImage: /images/azure_synapse.jpg
-date: 2020/11/04
+date: !!timestamp '2020-11-04'
 tags:
   - azure
   - c#
