@@ -5,49 +5,27 @@ import {
   recursivelyGetMarkdownFiles,
 } from '@/utils/markdown';
 import { getMDXComponent } from 'mdx-bundler/client';
+import { useMemo } from 'react';
 import Head from 'next/head';
-import React, { useEffect, useState } from 'react';
 
 type HowToPageProps = {
   metadata: Record<string, string>;
   pageContent: string;
 };
 
-export type Heading = {
-  id: string;
-  text: string;
-  level: number;
-};
-
 const HowToPage: NextPage<HowToPageProps> = ({ metadata, pageContent }) => {
-  const Component = React.useMemo(
-    () => getMDXComponent(pageContent),
-    [pageContent]
-  );
-
-  const [headings, setHeadings] = useState<Heading[]>([]);
-
-  useEffect(() => {
-    const elements = Array.from(document.querySelectorAll('h2, h3, h4')).map(
-      (elem) => ({
-        id: elem.id,
-        text: elem.textContent!,
-        level: Number(elem.nodeName.charAt(1)) - 2,
-      })
-    );
-    setHeadings(elements);
-  }, []);
-
+  const Component = useMemo(() => getMDXComponent(pageContent), [pageContent]);
+  console.log(pageContent);
   return (
     <>
       <Head>
         <title>{metadata.title}</title>
       </Head>
-      <div className="flex justify-center">
-        <article className="prose-sm md:prose">
+      <div className="md:flex justify-center">
+        <article className="prose-sm md:prose flex-1 md:mr-5">
           <Component />
         </article>
-        <TableOfContents headings={headings} />
+        <TableOfContents />
       </div>
     </>
   );
@@ -58,12 +36,12 @@ export const getStaticProps: GetStaticProps<
   { slug: string; year: string }
 > = async ({ params }) => {
   return {
-    props: await createPageFromMarkdown('howto', params!.year, params!.slug),
+    props: await createPageFromMarkdown('posts', params!.year, params!.slug),
   };
 };
 
 export const getStaticPaths: GetStaticPaths = async () => ({
-  paths: await recursivelyGetMarkdownFiles('howto'),
+  paths: await recursivelyGetMarkdownFiles('posts'),
   fallback: false,
 });
 

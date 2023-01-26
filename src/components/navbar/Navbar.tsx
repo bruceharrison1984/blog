@@ -14,7 +14,6 @@ function classNames(...classes: string[]) {
 }
 
 export function Navbar({ currentRoute }: { currentRoute: string }) {
-  console.log(currentRoute);
   return (
     <Disclosure as="nav" className="bg-gray-400">
       {({ open }) => (

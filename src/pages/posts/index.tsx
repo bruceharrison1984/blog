@@ -41,7 +41,7 @@ const HowToPage: NextPage<HowToPageProps> = ({ metadata }) => {
 
 export const getStaticProps: GetStaticProps = async () => {
   return {
-    props: { metadata: await recursivelyGetMetadata('howto') },
+    props: { metadata: await recursivelyGetMetadata('posts') },
   };
 };
 
