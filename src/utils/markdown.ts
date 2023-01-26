@@ -55,6 +55,11 @@ export const createPageFromMarkdown = async (
       ];
       return o;
     },
+    esbuildOptions(options, frontmatter) {
+      options.minify = true;
+      options.target = ['es2020'];
+      return options;
+    },
   });
 
   return { metadata: frontmatter, pageContent: code };

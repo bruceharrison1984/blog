@@ -15,7 +15,6 @@ type HowToPageProps = {
 
 const HowToPage: NextPage<HowToPageProps> = ({ metadata, pageContent }) => {
   const Component = useMemo(() => getMDXComponent(pageContent), [pageContent]);
-  console.log(pageContent);
   return (
     <>
       <Head>
