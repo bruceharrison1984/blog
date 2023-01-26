@@ -10,6 +10,8 @@
     "export": "next build && next export"
   },
   "dependencies": {
+    "@headlessui/react": "^1.7.7",
+    "@heroicons/react": "^2.0.14",
     "daisyui": "^2.45.0",
     "highlight.js": "^11.7.0",
     "mdx-bundler": "^9.2.1",

@@ -15,7 +15,7 @@ I addition of AWS Secrets Manager has been a great help with Terraform deploymen
 
 There are countless patterns you can use within Terraform to put values in to AWS Secrets Manager, but I have found the following module to be convenient and easy was to do it. It centralizes all the secret management, and makes it easy to name them all consistently. The output also makes it easy for other Terraform templates that utilize remote-state to access the same secrets.
 
-```tf
+```hcl
 variable "base_name" {
   description = "The prefix on created resources"
 }
@@ -60,7 +60,7 @@ output "secret_arns" {
 
 Usage is extremely straight-forward:
 
-```tf
+```hcl
 module "secrets" {
   source       = "./secrets"
   base_name    = local.base_name
@@ -76,7 +76,7 @@ module "secrets" {
 
 The output of the module is a map of secret-name/secret-arn, which can be easily passed to other processes so they can securely retrieve the values, without exposing them.
 
-IMAGE GOES HERE
+![Image1](/assets/posts/2021/aws-secrets-manager-terraform-1.png)
 
 A more complete example can be found in this repository:
 https://github.com/bruceharrison1984/aws-fargate-bastion-cluster/tree/dev/secrets

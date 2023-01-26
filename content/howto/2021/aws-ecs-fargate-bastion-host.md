@@ -24,7 +24,7 @@ https://github.com/bruceharrison1984/aws-fargate-bastion-cluster
 
 The general architecture is represented in the following diagram:
 
-IMAGE GOES HERE
+![Image1](/assets/posts/2021/aws-ecs-fargate-bastion-host-1.webp)
 
 - Matching private/public subnets in each AZ
 - Three ECS Fargate containers running the linuxserver/openssh-server container
@@ -51,7 +51,7 @@ We will handle authentication in to our SSH server with certificates. Our contai
 
 So now we have everything we need to get secure login, but now we need our container to know about it. The next step is to allow the ECS Task to access those particular Secrets and read them, and inject the values as environment variables in to our container. The [linuxserver/openssh-server](https://github.com/linuxserver/docker-openssh-server) does most of the heavy lifting here, so kudos to the developers of it.
 
-```tf
+```hcl
 resource "aws_ecs_task_definition" "bastion" {
   family                   = "${var.base_name}-bastion-task"
   network_mode             = "awsvpc"
@@ -105,7 +105,7 @@ The parts to focus on on the “secrets” and “environment” sections of the
 
 When the container starts up, it will place the public key in the authorized_keys, and create a user based on the username Terraform created.
 
-IMAGE GOES HERE
+![Image1](/assets/posts/2021/aws-ecs-fargate-bastion-host-2.png)
 
 Now we can login to the server by doing the following:
 

@@ -25,10 +25,10 @@ $Fields = @{
   client_secret = "<service-principal-secret>"
 };
 $response = Invoke-RestMethod `
-    –Uri "https://login.microsoftonline.com/<azure-tenant-id>/oauth2/token" `
-    –ContentType "application/x-www-form-urlencoded" `
-    –Method POST `
-    –Body $Fields;
+    -Uri "https://login.microsoftonline.com/<azure-tenant-id>/oauth2/token" `
+    -ContentType "application/x-www-form-urlencoded" `
+    -Method POST `
+    -Body $Fields;
 
 Write-Output $tokenResponse.access_token
 ```
@@ -37,6 +37,6 @@ This almost one-liner will authenticate the Service Principal against the target
 
 The access_token can then be checked with something like JWT.io to verify the payload:
 
-IMAGE GOES HERE
+![Image1](/assets/posts/2020/get-an-azure-service-principal-token-with-almost-one-line-in-powershell-1.png)
 
 That’s it, just pass the token in to whatever process needs it and you’re good to go.

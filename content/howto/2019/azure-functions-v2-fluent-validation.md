@@ -9,7 +9,7 @@ tags:
   - c#
 ---
 
-# Azure V2 Functions with FluentValidation
+# Azure V2 Functions - FluentValidation
 
 _This walkthrough makes extensive use of inheritance and generics, so read up on those if anything here doesn't make sense to you._
 
@@ -17,14 +17,13 @@ The Azure Function V2 addition of being able to accept a typed model as a functi
 
 The downside to this approach is that you only get basic pass/fail model validation from the Azure Function. Fine grained error messages based on the content of the object aren't possible with the OOTB model validation. Worse still, due to the absence of Filter/Middleware, there isn't any good place we can hook in to the default model validation. To get the level of control we desire, we are going to use the FluentValidation Nuget package. This package has been around for nearly 10 years, is wildly popular, and is a snap to use.
 
-```c#
-public async Task<IActionResult> PostWidget(
-[HttpTrigger(AuthorizationLevel.Anonymous, "post", Route = "widgets")] Models.Widget item, ILogger log)
-{
-log.LogInformation($"posting widget: ${item.Id}");
-var newItem = await _dbContext.Widgets.AddAsync(item);
-await _dbContext.SaveChangesAsync();
-return new OkObjectResult(newItem.Entity);
+```csharp
+public async Task < IActionResult > PostWidget(
+  [HttpTrigger(AuthorizationLevel.Anonymous, "post", Route = "widgets")] Models.Widget item, ILogger log) {
+  log.LogInformation($"posting widget: ${item.Id}");
+  var newItem = await _dbContext.Widgets.AddAsync(item);
+  await _dbContext.SaveChangesAsync();
+  return new OkObjectResult(newItem.Entity);
 }
 ```
 
@@ -34,34 +33,33 @@ _This isn't required, but it is good practice. I recommend reading up on the dat
 
 Before we go any further, we are going to create a DataEnvelope response type. I prefer this type of response because it is future proof, and returns a consistent response to the client for success and failure. The best part is it allows us to return any HTTP status code with a payload. OOTB response types do not allow for this. The rest of this tutorial assumes you are using this response type.
 
-```c#
+```csharp
 using System.Net;
 using Microsoft.AspNetCore.Mvc;
-namespace WidgetApi.Models
-{
-internal class ResponseEnvelopeResult<T> : ObjectResult where T : class
-{
-/// <summary>
-/// Data envelope for wrapping responses
-/// </summary>
-/// <param name="statusCode">http status code to return</param>
-/// <param name="data">raw response data</param>
-/// <param name="error">friendly error string</param>
-public ResponseEnvelopeResult(HttpStatusCode statusCode = HttpStatusCode.OK, T data = null, object error = null) : base(new ResponseEnvelope<T>(data, error))
-{
-this.StatusCode = (int)statusCode;
-}
-}
-internal class ResponseEnvelope<T> where T : class
-{
-public T Data { get; }
-public object Error { get; }
-public ResponseEnvelope(T data, object error)
-{
-Data = data;
-Error = error;
-}
-}
+namespace WidgetApi.Models {
+  internal class ResponseEnvelopeResult < T >: ObjectResult where T: class {
+    /// <summary>
+    /// Data envelope for wrapping responses
+    /// </summary>
+    /// <param name="statusCode">http status code to return</param>
+    /// <param name="data">raw response data</param>
+    /// <param name="error">friendly error string</param>
+    public ResponseEnvelopeResult(HttpStatusCode statusCode = HttpStatusCode.OK, T data = null, object error = null): base(new ResponseEnvelope < T > (data, error)) {
+      this.StatusCode = (int) statusCode;
+    }
+  }
+  internal class ResponseEnvelope < T > where T: class {
+    public T Data {
+      get;
+    }
+    public object Error {
+      get;
+    }
+    public ResponseEnvelope(T data, object error) {
+      Data = data;
+      Error = error;
+    }
+  }
 }
 ```
 
@@ -75,30 +73,59 @@ All the examples here assume you are using Azure Functions V2, and Azure Functi
 
 To start out, we are going to declare a few data objects that inherit from a common abstract base class called ModelBase. The reason I am doing this is because I have audit properties that I want to appear on every data object, but I don't want to re-type it for every object. We can also leverage this base class to perform standard validation against these fields.
 
-```c#
+```csharp
 using System;
-namespace WidgetApi.Models
-{
-public abstract class ModelBase
-{
-public int Id { get; set; }
-public int CreatedBy { get; set; }
-public DateTime CreatedOn { get; set; }
-public int? UpdatedBy { get; set; }
-public DateTime? UpdatedOn { get; set; }
-}
-public class User : ModelBase
-{
-public string GivenName { get; set; }
-public string JobTitle {get; set; }
-public string Mail {get; set; }
-public string Surname { get; set; }
-}
-public class Widget : ModelBase
-{
-public string Title { get; set; }
-public string Description { get; set; }
-}
+namespace WidgetApi.Models {
+  public abstract class ModelBase {
+    public int Id {
+      get;
+      set;
+    }
+    public int CreatedBy {
+      get;
+      set;
+    }
+    public DateTime CreatedOn {
+      get;
+      set;
+    }
+    public int ? UpdatedBy {
+      get;
+      set;
+    }
+    public DateTime ? UpdatedOn {
+      get;
+      set;
+    }
+  }
+  public class User: ModelBase {
+    public string GivenName {
+      get;
+      set;
+    }
+    public string JobTitle {
+      get;
+      set;
+    }
+    public string Mail {
+      get;
+      set;
+    }
+    public string Surname {
+      get;
+      set;
+    }
+  }
+  public class Widget: ModelBase {
+    public string Title {
+      get;
+      set;
+    }
+    public string Description {
+      get;
+      set;
+    }
+  }
 }
 ```
 
@@ -108,46 +135,37 @@ So now we have two objects, User and Widget that exist in our code and in our im
 
 The next step is to use FluentValidation to create a set of rules that can be used to validate our models when they are received.
 
-```c#
+```csharp
 using System.Net.Http;
 using FluentValidation;
 using WidgetApi.Models;
-namespace WidgetApi.FunctionHelpers
-{
-public class BaseValidator<T> : AbstractValidator<T> where T : ModelBase
-{
-public BaseValidator()
-{
-RuleSet(HttpMethod.Post.Method, () =>
-{
-RuleFor(x => x.Id).Empty()
-.WithMessage($"Id field cannot be specified when POSTing a new item '{typeof(T).Name}'");
-});
-RuleSet(HttpMethod.Patch.Method, () =>
-{
-RuleFor(x => x.Id).NotEmpty();
-});
-RuleSet("audit", () =>
-{
-RuleFor(x => x.CreatedBy).Empty();
-RuleFor(x => x.CreatedOn).Empty();
-RuleFor(x => x.UpdatedBy).Empty();
-RuleFor(x => x.UpdatedOn).Empty();
-});
-}
-}
-public class WidgetValidator : BaseValidator<Widget>
-{
-public WidgetValidator()
-{
-RuleSet(HttpMethod.Post.Method, () =>
-{
-RuleFor(x => x.Title).NotEmpty();
-RuleFor(x => x.Description).NotEmpty();
-});
-}
-}
-public class UserValidator : BaseValidator<User> { }
+namespace WidgetApi.FunctionHelpers {
+  public class BaseValidator < T >: AbstractValidator < T > where T: ModelBase {
+    public BaseValidator() {
+      RuleSet(HttpMethod.Post.Method, () => {
+        RuleFor(x => x.Id).Empty()
+          .WithMessage($"Id field cannot be specified when POSTing a new item '{typeof(T).Name}'");
+      });
+      RuleSet(HttpMethod.Patch.Method, () => {
+        RuleFor(x => x.Id).NotEmpty();
+      });
+      RuleSet("audit", () => {
+        RuleFor(x => x.CreatedBy).Empty();
+        RuleFor(x => x.CreatedOn).Empty();
+        RuleFor(x => x.UpdatedBy).Empty();
+        RuleFor(x => x.UpdatedOn).Empty();
+      });
+    }
+  }
+  public class WidgetValidator: BaseValidator < Widget > {
+    public WidgetValidator() {
+      RuleSet(HttpMethod.Post.Method, () => {
+        RuleFor(x => x.Title).NotEmpty();
+        RuleFor(x => x.Description).NotEmpty();
+      });
+    }
+  }
+  public class UserValidator: BaseValidator < User > {}
 }
 ```
 
@@ -165,7 +183,7 @@ On Line 44, we creating a rules object for the User object, but don't define any
 
 In order to maximize reusability, we are going to write a function that can validate any of our models that inherit from ModelBase.
 
-```c#
+```csharp
 using System;
 using System.Linq;
 using System.Net;
@@ -176,37 +194,31 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore.Internal;
 using Microsoft.Extensions.Logging;
 using WidgetApi.Models;
-namespace WidgetApi.FunctionHelpers
-{
-public class FunctionWrapper<T> where T : ModelBase
-{
-private readonly BaseValidator<T> _validator;
-private readonly ILogger _log;
-public FunctionWrapper(BaseValidator<T> validator, ILogger<FunctionWrapper<T>> log)
-{
-_validator = validator;
-_log = log;
-}
-public async Task<IActionResult> Execute(T model, HttpRequest req, Func<Task<IActionResult>> azureFunction)
-{
-var results = await _validator.ValidateAsync(model, ruleSet: $"default,audit,{req.Method}");
-if (!results.IsValid)
-{
-var errors = results.Errors.Select(x => x.ErrorMessage).ToList();
-_log.LogWarning($"Model validation failed for type '{typeof(T).Name}'. Validation errors: [{errors.Join()}] ");
-return new ResponseEnvelopeResult<T>(HttpStatusCode.BadRequest, null, errors);
-}
-try
-{
-return await azureFunction();
-}
-catch (Exception e)
-{
-_log.LogError(e, "Unhandled exception occured in FunctionWrapper");
-return new ResponseEnvelopeResult<T>(HttpStatusCode.InternalServerError, null, new[] { e.Message });
-}
-}
-}
+namespace WidgetApi.FunctionHelpers {
+  public class FunctionWrapper < T > where T: ModelBase {
+    private readonly BaseValidator < T > _validator;
+    private readonly ILogger _log;
+    public FunctionWrapper(BaseValidator < T > validator, ILogger < FunctionWrapper < T >> log) {
+      _validator = validator;
+      _log = log;
+    }
+    public async Task < IActionResult > Execute(T model, HttpRequest req, Func < Task < IActionResult >> azureFunction) {
+      var results = await _validator.ValidateAsync(model, ruleSet: $ "default,audit,{req.Method}");
+      if (!results.IsValid) {
+        var errors = results.Errors.Select(x => x.ErrorMessage).ToList();
+        _log.LogWarning($"Model validation failed for type '{typeof(T).Name}'. Validation errors: [{errors.Join()}] ");
+        return new ResponseEnvelopeResult < T > (HttpStatusCode.BadRequest, null, errors);
+      }
+      try {
+        return await azureFunction();
+      } catch (Exception e) {
+        _log.LogError(e, "Unhandled exception occured in FunctionWrapper");
+        return new ResponseEnvelopeResult < T > (HttpStatusCode.InternalServerError, null, new [] {
+          e.Message
+        });
+      }
+    }
+  }
 }
 ```
 
@@ -222,34 +234,30 @@ If validation succeeds, we will call our callback function(our original Azure fu
 
 All that is left now is to alter our original function to make use of the validator, and inject the new classes in to our DI services.
 
-```c#
-public class KeyResults
-{
-private readonly WidgetDbContext _dbContext;
-private readonly FunctionWrapper<Widget> _functionWrapper;
-public Widgets(WidgetDbContext dbContext, FunctionWrapper<Widget> functionWrapper)
-{
-_dbContext = dbContext;
-_functionWrapper = functionWrapper;
-}
-[FunctionName("PostWidget")]
-public async Task<IActionResult> PostWidget(
-[HttpTrigger(AuthorizationLevel.Anonymous, "post", Route = "widgets")] Widget item, HttpRequest req, ILogger log)
-{
-return await _functionWrapper.Execute(req, item, async () =>
-{
-log.LogInformation($"posting widget: ${item.Id}");
-var newItem = await dbContext.Widgets.AddAsync(item);
-await dbContext.SaveChangesAsync();
-return new ResponseEnvelopeResult<Widget>(HttpStatusCode.Created, newItem.Entity);
-});
-}
+```csharp
+public class KeyResults {
+  private readonly WidgetDbContext _dbContext;
+  private readonly FunctionWrapper < Widget > _functionWrapper;
+  public Widgets(WidgetDbContext dbContext, FunctionWrapper < Widget > functionWrapper) {
+      _dbContext = dbContext;
+      _functionWrapper = functionWrapper;
+    }
+    [FunctionName("PostWidget")]
+  public async Task < IActionResult > PostWidget(
+    [HttpTrigger(AuthorizationLevel.Anonymous, "post", Route = "widgets")] Widget item, HttpRequest req, ILogger log) {
+    return await _functionWrapper.Execute(req, item, async () => {
+      log.LogInformation($"posting widget: ${item.Id}");
+      var newItem = await dbContext.Widgets.AddAsync(item);
+      await dbContext.SaveChangesAsync();
+      return new ResponseEnvelopeResult < Widget > (HttpStatusCode.Created, newItem.Entity);
+    });
+  }
 }
 ```
 
 To update our function, we just need to inject our function wrapper in to our Function class, add the HttpRequest parameter to our function, and wrap the original function in our Execute method. The last thing is to update our startup.cs file to inject our classes.
 
-```c#
+```csharp
 public override void Configure(IFunctionsHostBuilder builder)
 {
 ...
@@ -264,7 +272,7 @@ builder.Services.AddTransient<FunctionWrapper<User>>();
 }
 ```
 
-We registered our ModelValidators and our FunctionWrapper, so everything should be good to go now. Pay attention to how we registered BaseValidators<T> as service types, but used a strongly typed implementation. This is because DI needs a little help in order to find the proper validator. If you try to do this by using the named implementation, DI will fail when it attempts to find the validator in the FunctionWrapper constructor. This points it in the right direction, and lets us use a single FunctionWrapper class to create N number of FunctionWrappers. Any objects we create from now on can utilize the FunctionWrapper as long as it inherits from BaseModel!
+We registered our ModelValidators and our FunctionWrapper, so everything should be good to go now. Pay attention to how we registered `BaseValidators<T>` as service types, but used a strongly typed implementation. This is because DI needs a little help in order to find the proper validator. If you try to do this by using the named implementation, DI will fail when it attempts to find the validator in the FunctionWrapper constructor. This points it in the right direction, and lets us use a single FunctionWrapper class to create N number of FunctionWrappers. Any objects we create from now on can utilize the FunctionWrapper as long as it inherits from BaseModel!
 
 ## Conclusion
 

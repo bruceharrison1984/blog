@@ -20,7 +20,7 @@ The Azure SDK ecosystem for C# is generally a train-wreck, with multiple package
 Example
 I am using the DI package for Azure Functions, so if you are not using it(why not?) you will need to slightly adapt this to get it working in your project. The example is also intentionally verbose to make it clear what we are doing.
 
-```c#
+```csharp
 using Azure.Identity;
 using Azure.ResourceManager.Resources;
 using MyFunctionProject.Models;

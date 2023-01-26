@@ -1,12 +1,12 @@
 ---
-title: 'Azure Functions V2 - Filters (without Filters)'
-metaDesc: Recently, I was tasked with building a fairly simple API using Azure Functions. Using VS2019, this is a trivial task because VS2019 comes with an Azure Function V2 project type. The addition of DI in V2 functions is also a major boon, because it finally gets rid of the code sprawl and duplication that previous lambda function competitors (I'm looking at you AWS) suffered from.
-legacyUrl: https://blog.bruceleeharrison.com/2019/09/04/azure-v2-functions-with-fluentvalidation/
-headerImage: /images/azure_functions.png
-date: !!timestamp '2019-10-28'
+title: Azure Functions V2 - Filters (without Filters)
+metaDesc: An elaborate experiment to see how viable using ECS/Fargate for a persistent bastion host really is
+legacyUrl: https://blog.bruceleeharrison.com/2021/03/02/aws-ecs-fargate-bastion-host/
+headerImage: /images/azure_synapse.jpg
+date: !!timestamp '2019-08-29'
 tags:
   - azure
-  - c#
+  - azure functions
 ---
 
 # Azure Functions V2 - Filters (without Filters)
@@ -27,81 +27,65 @@ Anyone who has written an asp.net API will be familiar with the error handler mi
 
 ```csharp
 [FunctionName("GetWidget")]
-public async Task<IActionResult> GetWidget([HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = "/widgets/{id}")] HttpRequest req, int id, ILogger log)
-{
-log.LogInformation($"getting widget: ${id}");
-try
-{
-var selectedItem = await _dbContext.Widgets.FindAsync(id);
-return new ObjectResult(selectedItem);
+public async Task < IActionResult > GetWidget([HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = "/widgets/{id}")] HttpRequest req, int id, ILogger log) {
+  log.LogInformation($"getting widget: ${id}");
+  try {
+    var selectedItem = await _dbContext.Widgets.FindAsync(id);
+    return new ObjectResult(selectedItem);
+  } catch (Exception e) {
+    return new CustomObjectResult(e.Message, StatusCodes.Status500InternalServerError);
+  }
 }
-catch (Exception e)
-{
-return new CustomObjectResult(e.Message, StatusCodes.Status500InternalServerError);
-}
-}
-class CustomObjectResult : ObjectResult
-{
-public CustomObjectResult(object data, int statusCode) : base(data)
-{
-this.StatusCode = statusCode;
-}
+class CustomObjectResult: ObjectResult {
+  public CustomObjectResult(object data, int statusCode): base(data) {
+    this.StatusCode = statusCode;
+  }
 }
 ```
 
 So the above works okay for a few endpoints. We get a 500 back if we failed to catch any errors, as well as the error message. Once our API grows to 10+ endpoints, you'll be doing quite a bit of copy/pasting for such a simple operation. The odds of fat fingering part of the code grows with each endpoint, and let's not talk about if we decide to change the response type. Let's see how we can consolidate this error handling logic by creating a new class.
 
 ```csharp
-public class FunctionWrapper
-{
-private readonly ILogger _log;
-public FunctionWrapper(ILogger<FunctionWrapper> log)
-{
-_log = log;
-}
-public async Task<IActionResult> Execute(Func<Task<IActionResult>> azureFunction)
-{
-try
-{
-return await azureFunction();
-}
-catch (Exception e)
-{
-_log.LogError(e, "Unhandled exception occured in FunctionWrapper");
-return new CustomObjectResult(e.Message, StatusCodes.Status500InternalServerError);
-}
-}
+public class FunctionWrapper {
+  private readonly ILogger _log;
+  public FunctionWrapper(ILogger < FunctionWrapper > log) {
+    _log = log;
+  }
+  public async Task < IActionResult > Execute(Func < Task < IActionResult >> azureFunction) {
+    try {
+      return await azureFunction();
+    } catch (Exception e) {
+      _log.LogError(e, "Unhandled exception occured in FunctionWrapper");
+      return new CustomObjectResult(e.Message, StatusCodes.Status500InternalServerError);
+    }
+  }
 }
 ```
 
 The class itself is very simple. The Execute function takes one argument, a function with a return type of IActionResult. It just so happens that your original function logic returned an IActionResult, so we can utilize an inline lambda function in our function method. Now that we have our new function wrapper, let's implement it in to our API. The first step is injecting our wrapper in to the service collection.
 
-```csharp
+```csharp showLineNumbers
 builder.Services.AddTransient<FunctionWrapper>();
 ```
 
 Now we can utilize our wrapper in our Function code. You could also make use of a static class instead of using a DI container, but testing static classes is difficult and it doesn't really buy us anything in this scenario anyway.
 
 ```csharp
-public class Widgets
-{
-private readonly DbContext _DbContext;
-private readonly FunctionWrapper _functionWrapper;
-public Widgets(DbContext DbContext, FunctionWrapper functionWrapper)
-{
-_DbContext = DbContext;
-_functionWrapper = functionWrapper;
-}
-[FunctionName("GetWidget")]
-public async Task<IActionResult> GetWidget([HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = "/widgets/{id}")] HttpRequest req, int id, ILogger log)
-{
-return await _functionWrapper.Execute(async () =>
-{
-log.LogInformation($"getting widget: ${id}");
-var selectedItem = await _DbContext.Widgets.FindAsync(id);
-return new CustomObjectResult(selectedItem, StatusCodes.Status200OK);
-});
-}
+public class Widgets {
+  private readonly DbContext _DbContext;
+  private readonly FunctionWrapper _functionWrapper;
+  public Widgets(DbContext DbContext, FunctionWrapper functionWrapper) {
+      _DbContext = DbContext;
+      _functionWrapper = functionWrapper;
+    }
+    [FunctionName("GetWidget")]
+  public async Task < IActionResult > GetWidget([HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = "/widgets/{id}")] HttpRequest req, int id, ILogger log) {
+    return await _functionWrapper.Execute(async () => {
+      log.LogInformation($"getting widget: ${id}");
+      var selectedItem = await _DbContext.Widgets.FindAsync(id);
+      return new CustomObjectResult(selectedItem, StatusCodes.Status200OK);
+    });
+  }
 }
 ```
 
