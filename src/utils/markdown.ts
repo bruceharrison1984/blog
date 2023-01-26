@@ -1,12 +1,13 @@
 import { DocumentMetadata } from '@/types/DocumentMetadata';
 import { bundleMDX } from 'mdx-bundler';
 import fs from 'fs';
+import imageSize from 'rehype-img-size';
 import matter from 'gray-matter';
 import recursiveRead from 'recursive-readdir';
 import rehypeAutolinkHeadings from 'rehype-autolink-headings';
 import rehypePrettyCode from 'rehype-pretty-code';
 import rehypeSlug from 'rehype-slug';
-import remarkFrontmatter from 'remark-frontmatter';
+import remarkGfm from 'remark-gfm';
 
 export const recursivelyGetMarkdownFiles = async (
   directoryPath: string,
@@ -45,8 +46,13 @@ export const createPageFromMarkdown = async (
     file: `${[baseDir, directoryPath, year, slug].join('/')}.md`,
     cwd: process.cwd(),
     mdxOptions: (o) => {
-      o.remarkPlugins = [remarkFrontmatter];
-      o.rehypePlugins = [rehypeAutolinkHeadings, rehypeSlug, rehypePrettyCode];
+      o.remarkPlugins = [...(o.remarkPlugins ?? []), remarkGfm];
+      o.rehypePlugins = [
+        ...(o.rehypePlugins ?? []),
+        rehypeAutolinkHeadings,
+        rehypeSlug,
+        rehypePrettyCode,
+      ];
       return o;
     },
   });
