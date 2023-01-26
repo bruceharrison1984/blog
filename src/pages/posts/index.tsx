@@ -4,33 +4,35 @@ import { recursivelyGetMetadata } from '@/utils/markdown';
 import Image from 'next/image';
 import Link from 'next/link';
 
-type HowToPageProps = {
+type PostsPageProps = {
   metadata?: DocumentMetadata[];
 };
 
-const HowToPage: NextPage<HowToPageProps> = ({ metadata }) => {
+const PostsPage: NextPage<PostsPageProps> = ({ metadata }) => {
   return (
     <div className="space-y-2">
-      {metadata?.map((data) => (
+      {metadata?.map(({ title, headerImage, currentUrl, date, metaDesc }) => (
         <div
-          key={data.title}
+          key={title}
           className="card card-bordered lg:card-side bg-base-100 shadow-xl mx-auto w-full md:w-2/3 xl:w-3/5"
         >
-          {data.headerImage && (
+          {headerImage && (
             <figure className="p-3">
               <Image
-                src={data.headerImage}
+                src={headerImage}
                 alt="post_image"
                 width={100}
                 height={100}
               />
             </figure>
           )}
-          <Link href={data.currentUrl}>
+          <Link href={currentUrl}>
             <div className="card-body">
-              <h2 className="card-title">{data.title}</h2>
-              <time className="text-sm">{data.date.toLocaleDateString()}</time>
-              <p className="prose">{data.metaDesc}</p>
+              <h2 className="card-title">{title}</h2>
+              <time className="text-sm">{`${
+                date.getUTCMonth() + 1
+              }/${date.getUTCDate()}/${date.getUTCFullYear()}`}</time>
+              <p className="prose">{metaDesc}</p>
             </div>
           </Link>
         </div>
@@ -45,4 +47,4 @@ export const getStaticProps: GetStaticProps = async () => {
   };
 };
 
-export default HowToPage;
+export default PostsPage;
