@@ -3,7 +3,7 @@ title: Debug Storybook from VSCode (2022)
 metaDesc: How to get VSCode working together with Storybook for effortless component debugging
 legacyUrl: https://blog.bruceleeharrison.com/2022/01/26/debug-storybook-from-vscode-2022/
 headerImage: /images/azure_synapse.jpg
-date: !!timestamp '2022-01-26'
+date: !!timestamp "2022-01-26"
 tags:
   - vscode
   - storybook
@@ -37,7 +37,7 @@ After a bit of playing around, the following simple setup allowed me to set brea
 
 Once you’ve added the Storybook Debug configuration to your launch.json, you should be able to run it from the debug menu.
 
-IMAGE GOES HERE
+![Drag Racing](/images/azure_synapse.jpg)
 
 Assuming your components compile and Storybook launches successfully, Chrome will automatically open up and with the debugger attached. Now you can easily debug your components running in Storybook with VSCode.
 

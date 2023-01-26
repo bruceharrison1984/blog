@@ -1,30 +1,24 @@
 import { DocumentMetadata } from '@/types/DocumentMetadata';
-import { definer as powershell } from './rehype-powershell';
-import { definer as terraform } from './rehype-terraform';
-import { unified } from 'unified';
+import { bundleMDX } from 'mdx-bundler';
 import fs from 'fs';
 import matter from 'gray-matter';
 import recursiveRead from 'recursive-readdir';
 import rehypeAutolinkHeadings from 'rehype-autolink-headings';
-import rehypeHighlight from 'rehype-highlight';
+import rehypePrettyCode from 'rehype-pretty-code';
 import rehypeSlug from 'rehype-slug';
-import rehypeStringify from 'rehype-stringify';
-import rehypeToc from '@jsdevtools/rehype-toc';
-import remarkGfm from 'remark-gfm';
-import remarkParse from 'remark-parse';
-import remarkRehype from 'remark-rehype';
+import remarkFrontmatter from 'remark-frontmatter';
 
 export const recursivelyGetMarkdownFiles = async (
   directoryPath: string,
-  baseDir = 'content',
+  baseDir = 'content'
 ) =>
   (await recursiveRead([baseDir, directoryPath].join('/'))).map((x) =>
-    x.replace('.md', '').replace(baseDir, '').replaceAll('\\', '/'),
+    x.replace('.md', '').replace(baseDir, '').replaceAll('\\', '/')
   );
 
 export const recursivelyGetMetadata = async (
   directoryPath: string,
-  baseDir = 'content',
+  baseDir = 'content'
 ) => {
   const files = await recursivelyGetMarkdownFiles(directoryPath, baseDir);
   const metadata = await Promise.all(
@@ -33,7 +27,7 @@ export const recursivelyGetMetadata = async (
       const { data } = matter(markdownFile);
       data.currentUrl = file;
       return data as DocumentMetadata;
-    }),
+    })
   );
   const sortedMetadata = metadata
     .sort((x, y) => x.date.valueOf() - y.date.valueOf())
@@ -41,33 +35,21 @@ export const recursivelyGetMetadata = async (
   return sortedMetadata;
 };
 
-export const createPageFromMarkdown = (
+export const createPageFromMarkdown = async (
   directoryPath: string,
   year: string,
   slug: string,
-  baseDir = 'content',
+  baseDir = 'content'
 ) => {
-  const markdownFile = fs.readFileSync(
-    `${[baseDir, directoryPath, year, slug].join('/')}.md`,
-  );
-  const { data, content } = matter(markdownFile);
+  const { code, frontmatter } = await bundleMDX({
+    file: `${[baseDir, directoryPath, year, slug].join('/')}.md`,
+    cwd: process.cwd(),
+    mdxOptions: (o) => {
+      o.remarkPlugins = [remarkFrontmatter];
+      o.rehypePlugins = [rehypeAutolinkHeadings, rehypeSlug, rehypePrettyCode];
+      return o;
+    },
+  });
 
-  let pageContent = unified()
-    .use(remarkParse)
-    .use(remarkGfm)
-    .use(remarkRehype)
-    .use(rehypeSlug)
-    .use(rehypeAutolinkHeadings, { behavior: 'wrap' })
-    .use(rehypeToc)
-    .use(rehypeHighlight, {
-      languages: { tf: terraform, powershell: powershell },
-    })
-    .use(rehypeStringify)
-    .processSync(content)
-    .toString();
-
-  const match = pageContent.match('(<nav class="toc">.*</nav>)');
-  pageContent = pageContent.replace(match![0], '');
-
-  return { metadata: data, pageContent: pageContent, toc: match![0] };
+  return { metadata: frontmatter, pageContent: code };
 };

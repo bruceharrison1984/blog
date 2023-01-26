@@ -1,5 +1,4 @@
 import '../styles/globals.css';
-import 'highlight.js/styles/github.css';
 import { Inter } from '@next/font/google';
 
 const inter = Inter({ subsets: ['latin'] });
