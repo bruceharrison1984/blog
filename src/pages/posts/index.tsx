@@ -8,38 +8,25 @@ type PostsPageProps = {
   metadata?: DocumentMetadata[];
 };
 
-const PostsPage: NextPage<PostsPageProps> = ({ metadata }) => {
-  return (
-    <div className="space-y-2">
-      {metadata?.map(({ title, headerImage, currentUrl, date, metaDesc }) => (
+const PostsPage: NextPage<PostsPageProps> = ({ metadata }) => (
+  <div className="space-y-2 flex flex-col items-center">
+    {metadata?.map(({ headerImage, title, metaDesc }) => (
+      <div key={title} className="w-full lg:w-2/3 flex">
         <div
-          key={title}
-          className="card card-bordered lg:card-side bg-base-100 shadow-xl mx-auto w-full md:w-2/3 xl:w-3/5"
-        >
-          {headerImage && (
-            <figure className="p-3">
-              <Image
-                src={headerImage}
-                alt="post_image"
-                width={100}
-                height={100}
-              />
-            </figure>
-          )}
-          <Link href={currentUrl}>
-            <div className="card-body">
-              <h2 className="card-title">{title}</h2>
-              <time className="text-sm">{`${
-                date.getUTCMonth() + 1
-              }/${date.getUTCDate()}/${date.getUTCFullYear()}`}</time>
-              <p className="prose">{metaDesc}</p>
-            </div>
-          </Link>
+          className="h-auto w-48 bg-cover rounded-l text-center overflow-hidden"
+          style={{ backgroundImage: `url('${headerImage}')` }}
+          title="Woman holding a mug"
+        />
+        <div className="border-r border-b border-l-0 border-t border-gray-400 bg-white rounded-b-none rounded-r p-4 flex flex-col justify-between leading-normal">
+          <div className="mb-8">
+            <div className="text-gray-900 font-bold text-xl mb-2">{title}</div>
+            <p className="text-gray-700 text-base">{metaDesc}</p>
+          </div>
         </div>
-      ))}
-    </div>
-  );
-};
+      </div>
+    ))}
+  </div>
+);
 
 export const getStaticProps: GetStaticProps = async () => {
   return {
