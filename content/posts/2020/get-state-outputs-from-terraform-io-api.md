@@ -2,7 +2,7 @@
 title: Get State Outputs from Terraform.io API
 metaDesc: Ever wished you could easily access Terraform Cloud outputs within a CI/CD context? This is a simple way to do so.
 legacyUrl: https://blog.bruceleeharrison.com/2020/07/17/get-state-outputs-from-terraform-io-api/
-headerImage: /images/azure_synapse.jpg
+headerImage: /assets/posts/2020/get-state-outputs-from-terraform-io-api-1.png
 date: !!timestamp '2020-07-17'
 tags:
   - terraform
