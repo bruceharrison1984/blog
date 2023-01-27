@@ -25,7 +25,7 @@ export const ListItem = ({
     >
       <Image
         alt={title}
-        src={imageSrc || '/assets/posts/2022/debug-storybook-from-vscode-1.png'}
+        src={imageSrc}
         fill
         style={{ objectFit: 'cover' }}
         quality={100}
