@@ -1,6 +1,6 @@
 ---
 title: 'Azure V2 Functions - FluentValidation'
-metaDesc: The Azure Function V2 addition of being able to accept a typed model as a function parameter makes it easy and type-safe to interact with incoming JSON payloads. he downside to this approach is that you only get basic pass/fail model validation from the Azure Function. Fine grained error messages based on the content of the object aren't possible with the OOTB model validation.
+metaDesc: Setup an Azure Function project with seamless request validation
 legacyUrl: https://blog.bruceleeharrison.com/2019/08/29/azure-function-filters/
 date: !!timestamp '2019-09-04'
 tags:

@@ -7,9 +7,9 @@ type PostsPageProps = {
   posts?: ListItemProps[];
 };
 
-const PostsPage: NextPage<PostsPageProps> = ({ posts }) => (
-  <ItemList items={posts || []} />
-);
+const PostsPage: NextPage<PostsPageProps> = ({ posts }) => {
+  return <ItemList items={posts || []} />;
+};
 
 export const getStaticProps: GetStaticProps = async () => {
   const postMetadata = await recursivelyGetMetadata('posts', 'content');
@@ -20,6 +20,7 @@ export const getStaticProps: GetStaticProps = async () => {
         imageSrc: x.headerImage!,
         description: x.metaDesc,
         url: x.currentUrl,
+        tags: x.tags,
       })),
     },
   };

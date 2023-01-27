@@ -24,6 +24,7 @@ export const getStaticProps: GetStaticProps = async () => {
         imageSrc: x.headerImage!,
         description: x.metaDesc,
         url: x.currentUrl,
+        tags: x.tags,
       })),
     },
   };
