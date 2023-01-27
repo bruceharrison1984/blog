@@ -2,7 +2,6 @@
 title: Azure Functions V2 - Filters (without Filters)
 metaDesc: An elaborate experiment to see how viable using ECS/Fargate for a persistent bastion host really is
 legacyUrl: https://blog.bruceleeharrison.com/2021/03/02/aws-ecs-fargate-bastion-host/
-headerImage: /images/azure_synapse.jpg
 date: !!timestamp '2019-08-29'
 tags:
   - azure

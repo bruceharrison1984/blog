@@ -9,9 +9,7 @@ const ItemList = ({ items }: ItemListProps) => (
     {items?.map(({ imageSrc, title, description, url }) => (
       <ListItem
         key={title}
-        imageSrc={
-          imageSrc || '/assets/posts/2022/debug-storybook-from-vscode-1.png'
-        }
+        imageSrc={imageSrc || '/assets/posts/default.svg'}
         title={title}
         url={url}
         description={description}
