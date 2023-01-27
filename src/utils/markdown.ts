@@ -19,7 +19,8 @@ export const recursivelyGetMarkdownFiles = async (
 
 export const recursivelyGetMetadata = async (
   directoryPath: string,
-  baseDir = 'content'
+  baseDir = 'content',
+  limit?: number
 ) => {
   const files = await recursivelyGetMarkdownFiles(directoryPath, baseDir);
   const metadata = await Promise.all(
@@ -33,7 +34,7 @@ export const recursivelyGetMetadata = async (
   const sortedMetadata = metadata
     .sort((x, y) => x.date.valueOf() - y.date.valueOf())
     .reverse();
-  return sortedMetadata;
+  return sortedMetadata.slice(0, limit || sortedMetadata.length);
 };
 
 export const createPageFromMarkdown = async (

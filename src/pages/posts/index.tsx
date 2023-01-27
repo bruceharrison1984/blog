@@ -8,7 +8,7 @@ type PostsPageProps = {
 };
 
 const PostsPage: NextPage<PostsPageProps> = ({ metadata }) => (
-  <PostList metadata={metadata} />
+  <PostList posts={metadata} />
 );
 
 export const getStaticProps: GetStaticProps = async () => {
