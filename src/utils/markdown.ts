@@ -1,13 +1,15 @@
 import { DocumentMetadata } from '@/types/DocumentMetadata';
 import { bundleMDX } from 'mdx-bundler';
 import fs from 'fs';
-import imageSize from 'rehype-img-size';
+import imageSize, { Options } from 'rehype-img-size';
 import matter from 'gray-matter';
 import recursiveRead from 'recursive-readdir';
 import rehypeAutolinkHeadings from 'rehype-autolink-headings';
 import rehypePrettyCode from 'rehype-pretty-code';
 import rehypeSlug from 'rehype-slug';
 import remarkGfm from 'remark-gfm';
+import type { Plugin } from 'unified';
+import type { Root } from 'hast';
 
 export const recursivelyGetMarkdownFiles = async (
   directoryPath: string,
@@ -37,6 +39,9 @@ export const recursivelyGetMetadata = async (
   return sortedMetadata.slice(0, limit || sortedMetadata.length);
 };
 
+/** We have to override the type so mdx-bundler can make use of this plugin */
+const imageSizeWrapper = imageSize as Plugin<[Options] | void[], Root, string>;
+
 export const createPageFromMarkdown = async (
   directoryPath: string,
   year: string,
@@ -53,6 +58,7 @@ export const createPageFromMarkdown = async (
         rehypeAutolinkHeadings,
         rehypeSlug,
         rehypePrettyCode,
+        [imageSizeWrapper, { dir: 'public' }],
       ];
       return o;
     },
