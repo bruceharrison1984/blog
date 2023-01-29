@@ -1,16 +1,16 @@
 import { GetStaticProps, NextPage } from 'next';
-import { ListItemProps } from '@/components/itemList/Item';
+import { PostListItemProps } from '@/components/postList/PostListItem';
 import { recursivelyGetMetadata } from '@/utils/markdown';
-import ItemList from '@/components/itemList/ItemList';
+import PostList from '@/components/postList/PostList';
 
 type HomePageProps = {
-  posts?: ListItemProps[];
+  posts?: PostListItemProps[];
 };
 
 const Home: NextPage<HomePageProps> = ({ posts }) => {
   return (
     <div>
-      <ItemList items={posts || []} />
+      <PostList items={posts || []} />
     </div>
   );
 };
@@ -19,7 +19,7 @@ export const getStaticProps: GetStaticProps = async () => {
   const postMetadata = await recursivelyGetMetadata('posts', 'content', 3);
   return {
     props: {
-      posts: postMetadata.map<ListItemProps>((x) => ({
+      posts: postMetadata.map<PostListItemProps>((x) => ({
         title: x.title,
         imageSrc: x.headerImage!,
         description: x.metaDesc,

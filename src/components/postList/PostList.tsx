@@ -1,14 +1,14 @@
-import { ListItem, ListItemProps } from './Item';
+import { PostListItem, PostListItemProps } from './PostListItem';
 
-type ItemListProps = {
-  items: ListItemProps[];
+type PostListProps = {
+  items: PostListItemProps[];
 };
 
-const ItemList = ({ items }: ItemListProps) => {
+const PostList = ({ items }: PostListProps) => {
   return (
     <div className="space-y-2 flex flex-col items-center">
       {items?.map(({ imageSrc, title, description, url, tags }) => (
-        <ListItem
+        <PostListItem
           key={title}
           imageSrc={imageSrc || '/assets/posts/default.png'}
           title={title}
@@ -20,4 +20,4 @@ const ItemList = ({ items }: ItemListProps) => {
     </div>
   );
 };
-export default ItemList;
+export default PostList;

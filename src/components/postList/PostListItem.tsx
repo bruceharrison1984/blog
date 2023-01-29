@@ -1,7 +1,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
 
-export type ListItemProps = {
+export type PostListItemProps = {
   imageSrc: string;
   title: string;
   description: string;
@@ -9,13 +9,13 @@ export type ListItemProps = {
   tags?: string[];
 };
 
-export const ListItem = ({
+export const PostListItem = ({
   imageSrc,
   title,
   description,
   url,
   tags,
-}: ListItemProps) => {
+}: PostListItemProps) => {
   return (
     <div key={title} className="w-full lg:w-2/3 flex shadow-lg rounded-lg">
       <div
@@ -34,18 +34,18 @@ export const ListItem = ({
           quality={100}
         />
       </div>
-      <div className="border-r border-b border-l-0 border-t w-full border-gray-400 bg-white rounded-b-none rounded-r-lg p-4 flex flex-col justify-between leading-normal">
-        <div className="mb-4">
-          <div className="text-gray-900 font-bold text-xl mb-2">
-            <Link href={url}>{title}</Link>
-          </div>
-          <p className="text-gray-700 text-base">{description}</p>
+      <div className="border-r border-b border-l border-t w-full border-gray-400 bg-white rounded-b-none rounded-r-lg p-2 flex flex-col justify-between leading-normal">
+        <div className="text-gray-900 font-bold text-xl">
+          <Link href={url}>{title}</Link>
         </div>
+
+        <p className="text-gray-700 text-base">{description}</p>
+
         <div>
           {tags?.map((tag) => (
             <span
               key={tag}
-              className="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2"
+              className="bg-gray-200 rounded-full px-3 text-sm font-semibold text-gray-700 mr-2 hidden md:inline-block"
             >
               {tag}
             </span>

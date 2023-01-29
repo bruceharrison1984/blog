@@ -1,26 +1,21 @@
 import { GetStaticProps, NextPage } from 'next';
-import { ListItemProps } from '@/components/itemList/Item';
+import { RepoMetadata } from '@/types/RepoMetadata';
 import { getRepos } from '@/utils/repoFetcher';
-import ItemList from '@/components/itemList/ItemList';
+import RepoList from '@/components/repoList/RepoList';
 
 type ProjectsPageProps = {
-  posts?: ListItemProps[];
+  repos?: RepoMetadata[];
 };
 
-const ProjectsPage: NextPage<ProjectsPageProps> = ({ posts }) => (
-  <ItemList items={posts || []} />
+const ProjectsPage: NextPage<ProjectsPageProps> = ({ repos }) => (
+  <RepoList repos={repos || []} />
 );
 
 export const getStaticProps: GetStaticProps = async () => {
-  const postMetadata = await getRepos();
+  const repoMetadata = await getRepos();
   return {
     props: {
-      posts: postMetadata.map<ListItemProps>((x) => ({
-        title: x.full_name,
-        imageSrc: '/assets/github_logo.png',
-        description: x.description,
-        url: x.html_url,
-      })),
+      repos: repoMetadata,
     },
   };
 };
