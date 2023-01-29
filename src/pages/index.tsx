@@ -1,22 +1,29 @@
 import { GetStaticProps, NextPage } from 'next';
 import { PostListItemProps } from '@/components/postList/PostListItem';
+import { RepoMetadata } from '@/types/RepoMetadata';
+import { getRepos } from '@/utils/repoFetcher';
 import { recursivelyGetMetadata } from '@/utils/markdown';
 import PostList from '@/components/postList/PostList';
+import RepoList from '@/components/repoList/RepoList';
 
 type HomePageProps = {
   posts?: PostListItemProps[];
+  repos?: RepoMetadata[];
 };
 
-const Home: NextPage<HomePageProps> = ({ posts }) => {
+const Home: NextPage<HomePageProps> = ({ posts, repos }) => {
   return (
     <div>
       <PostList items={posts || []} />
+      <RepoList repos={repos || []} />
     </div>
   );
 };
 
 export const getStaticProps: GetStaticProps = async () => {
   const postMetadata = await recursivelyGetMetadata('posts', 'content', 3);
+  const repoMetadata = await getRepos(3);
+
   return {
     props: {
       posts: postMetadata.map<PostListItemProps>((x) => ({
@@ -26,6 +33,7 @@ export const getStaticProps: GetStaticProps = async () => {
         url: x.currentUrl,
         tags: x.tags,
       })),
+      repos: repoMetadata,
     },
   };
 };
