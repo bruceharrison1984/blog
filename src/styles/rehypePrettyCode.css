@@ -5,7 +5,7 @@ code {
 pre > code {
   display: grid;
   width: 100%;
-  overflow: scroll;
+  overflow-x: auto;
 }
 
 code > .line::before {
