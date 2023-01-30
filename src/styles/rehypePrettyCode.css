@@ -4,15 +4,16 @@ code {
 
 pre > code {
   display: grid;
+  width: 100%;
+  overflow: scroll;
 }
 
 code > .line::before {
   counter-increment: line;
   content: counter(line);
-
+  margin-right: 2rem;
   display: inline-block;
   width: 1rem;
-  margin-right: 2rem;
   text-align: right;
   color: gray;
 }

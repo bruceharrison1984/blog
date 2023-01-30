@@ -15,14 +15,14 @@ const Home: NextPage<HomePageProps> = ({ posts, repos }) => {
   return (
     <div className="space-y-6">
       <div>
-        <div className="space-y-2 flex flex-col items-center">
-          <h2 className="w-full lg:w-2/3 font-bold">Posts</h2>
+        <div className="flex flex-col items-center">
+          <h2 className="w-full lg:w-2/3 font-bold mb-2">Posts</h2>
         </div>
         <PostList items={posts || []} />
       </div>
       <div>
-        <div className="space-y-2 flex flex-col items-center">
-          <h2 className="w-full lg:w-2/3 font-bold">Projects</h2>
+        <div className="flex flex-col items-center">
+          <h2 className="w-full lg:w-2/3 font-bold mb-2">Projects</h2>
         </div>
         <RepoList repos={repos || []} />
       </div>
