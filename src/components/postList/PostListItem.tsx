@@ -34,8 +34,8 @@ export const PostListItem = ({
           quality={100}
         />
       </div>
-      <div className="border-r border-b border-l border-t w-full border-gray-400 bg-white rounded-b-none rounded-r-lg p-2 flex flex-col justify-between leading-normal">
-        <div className="text-gray-900 font-bold text-xl">
+      <div className="border-r border-b border-l border-t w-full border-gray-400 bg-white rounded-b-none rounded-r-lg p-2 flex flex-col justify-between leading-normal space-y-2 overflow-hidden">
+        <div className="text-gray-900 font-bold md:text-xl truncate">
           <Link href={url}>{title}</Link>
         </div>
 
