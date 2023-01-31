@@ -4,8 +4,15 @@ import Link from 'next/link';
 const About = () => {
   return (
     <div className="prose-sm md:prose mx-auto shadow-lg rounded-lg bg-white bg-opacity-25 px-5 pt-5">
-      <h2>About</h2>
-      <p>
+      <Image
+        alt={'linkedin_logo'}
+        src={'/assets/about/headshot-1.webp'}
+        height={128}
+        width={128}
+        quality={100}
+        className="rounded-full border-solid border-black border-opacity-40 border-2 mx-auto"
+      />
+      <p className="indent-4">
         I am a software developer from St. Louis, who lives in the Midwest.
         Growing up, I was always fascinated with machines and technology. These
         interests have taking me down a wide variety industries, helping me
@@ -14,7 +21,7 @@ const About = () => {
         The aggregate result of this experience helps give me a unique approach
         to problem solving.
       </p>
-      <p>
+      <p className="indent-4">
         I started my technology career at a small business. Typical of many
         small businesses, I wore many hats. I worked as the network
         administrator, desktop support, in-house developer, web site
@@ -24,7 +31,7 @@ const About = () => {
         full-stack cloud developer, but my need to learn everything about a
         given environment certainly has roots in my beginnings.
       </p>
-      <p>
+      <p className="indent-4">
         As a full-stack developer I get the enjoyment of in-the-trenches coding,
         and the high-level architect point of view. I find it particularly
         enjoyable setting up CI/CD workflows, and seeing developers faces light
@@ -33,7 +40,7 @@ const About = () => {
         days, and got to witness the growth of the various cloud providers and
         their offerings first hand.
       </p>
-      <p>
+      <p className="indent-4">
         My LinkedIn page contains a more up-to-date listing of my employment and
         skills, check it out if you are interested in knowing more about me!
       </p>

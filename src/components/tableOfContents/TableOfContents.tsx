@@ -36,9 +36,14 @@ export const TableOfContents = () => {
   );
 
   return (
-    <nav className="flex-none invisible md:visible">
-      <span className="underline ">Table Of Contents</span>
-      <ol>{headings.map((heading) => makeListItem(heading))}</ol>
-    </nav>
+    <>
+      {headings.length ? (
+        <nav className="flex-none invisible md:visible">
+          <div className="prose-sm shadow-lg rounded-lg bg-white bg-opacity-25 p-1">
+            <ol>{headings.map((heading) => makeListItem(heading))}</ol>
+          </div>
+        </nav>
+      ) : undefined}
+    </>
   );
 };

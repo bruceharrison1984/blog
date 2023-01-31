@@ -9,7 +9,7 @@
 }
 
 ::-webkit-scrollbar-thumb {
-  background-color: rgba(0, 51, 255, 0.15);
+  background-color: rgba(0, 51, 255, 0.3);
 }
 
 ::-webkit-scrollbar-track-piece:start {
