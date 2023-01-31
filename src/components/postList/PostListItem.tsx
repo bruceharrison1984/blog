@@ -34,7 +34,7 @@ export const PostListItem = ({
           quality={100}
         />
       </div>
-      <div className="border-r border-b border-l border-t w-full border-gray-400 bg-white rounded-b-none rounded-r-lg p-2 flex flex-col justify-between leading-normal space-y-2 overflow-hidden">
+      <div className="border-r border-b border-l border-t w-full border-gray-400 bg-white bg-opacity-25 rounded-b-none rounded-r-lg p-2 flex flex-col justify-between leading-normal space-y-2 overflow-hidden">
         <div className="text-gray-900 font-bold md:text-xl truncate">
           <Link href={url}>{title}</Link>
         </div>
@@ -45,7 +45,7 @@ export const PostListItem = ({
           {tags?.map((tag) => (
             <span
               key={tag}
-              className="bg-gray-200 rounded-full px-3 text-sm font-semibold text-gray-700 mr-2 hidden md:inline-block"
+              className="bg-blue-300 rounded-full px-3 text-sm font-semibold text-gray-700 mr-2 hidden md:inline-block"
             >
               {tag}
             </span>

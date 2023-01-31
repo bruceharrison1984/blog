@@ -30,7 +30,7 @@ export const RepoListItem = ({
           />
         </div>
       </div>
-      <div className="border-r border-b border-t w-full border-gray-400 bg-white rounded-b-none rounded-r-lg p-2 justify-between leading-normal flex-shrink overflow-hidden space-y-2">
+      <div className="border-r border-b border-t w-full border-gray-400 bg-white bg-opacity-25 rounded-b-none rounded-r-lg p-2 justify-between leading-normal flex-shrink overflow-hidden space-y-2">
         <div className="text-gray-900 font-bold md:text-xl truncate">
           <Link href={html_url}>{full_name}</Link>
         </div>
