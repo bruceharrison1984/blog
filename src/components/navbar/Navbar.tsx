@@ -15,7 +15,7 @@ const navigation = [
   { name: 'About Me', href: '/about' },
 ];
 
-export const Navbar = () => {
+export const Navbar = ({ currentPath }: { currentPath: string }) => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   return (
@@ -38,8 +38,18 @@ export const Navbar = () => {
           {navigation.map((item) => (
             <Link
               key={item.name}
+              title={item.name}
               href={item.href}
-              className="text-sm font-semibold leading-6 text-gray-900 hover:bg-purple-500 hover:bg-opacity-20 p-1 rounded-lg"
+              className={`text-sm font-semibold leading-6 text-gray-900  p-1 rounded-lg ${
+                currentPath === item.href
+                  ? 'bg-purple-500 bg-opacity-50 cursor-default'
+                  : 'hover:bg-purple-500 hover:bg-opacity-20'
+              }`}
+              onClick={(e) => {
+                if (currentPath === item.href) {
+                  e.preventDefault();
+                }
+              }}
             >
               {item.name}
             </Link>
