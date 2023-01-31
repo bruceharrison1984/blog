@@ -17,7 +17,10 @@ export const PostListItem = ({
   tags,
 }: PostListItemProps) => {
   return (
-    <div key={title} className="w-full lg:w-2/3 flex shadow-lg rounded-lg">
+    <div
+      key={title}
+      className="w-full lg:w-2/3 flex shadow-lg rounded-lg bg-white bg-opacity-25"
+    >
       <div
         className="h-auto w-48 bg-cover rounded-l-lg text-center overflow-hidden relative"
         style={{
@@ -30,11 +33,11 @@ export const PostListItem = ({
           alt={title}
           src={imageSrc}
           fill
-          style={{ objectFit: 'cover' }}
           quality={100}
+          className="object-cover z-0"
         />
       </div>
-      <div className="border-r border-b border-l border-t w-full border-gray-400 bg-white bg-opacity-25 rounded-b-none rounded-r-lg p-2 flex flex-col justify-between leading-normal space-y-2 overflow-hidden">
+      <div className="border-r border-b border-l border-t w-full border-gray-400 rounded-b-none rounded-r-lg p-2 flex flex-col justify-between leading-normal space-y-2 overflow-hidden">
         <div className="text-gray-900 font-bold md:text-xl truncate">
           <Link href={url}>{title}</Link>
         </div>

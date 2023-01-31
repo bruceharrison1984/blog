@@ -9,8 +9,8 @@ export const NavbarLayout = ({ children }: { children: ReactNode }) => {
   return (
     <div className="flex flex-col h-screen">
       <Navbar2 />
-      <main className="p-6 justify-center h-screen overflow-y-auto">
-        {children}
+      <main className="p-6 justify-center h-screen overflow-x-hidden">
+        <div className="mt-12">{children}</div>
       </main>
     </div>
   );
