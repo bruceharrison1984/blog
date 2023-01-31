@@ -2,6 +2,7 @@
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline';
 import { Dialog } from '@headlessui/react';
 import { useState } from 'react';
+import Image from 'next/image';
 import Link from 'next/link';
 
 const navigation = [
@@ -48,10 +49,28 @@ export const Navbar = () => {
             </Link>
           ))}
         </div>
-        <div className="hidden lg:flex lg:flex-1 lg:justify-end">
-          <a href="#" className="text-sm font-semibold leading-6 text-gray-900">
-            Log in <span aria-hidden="true">&rarr;</span>
-          </a>
+        <div className="hidden lg:flex lg:flex-1 lg:justify-end space-x-2">
+          <Link href="https://github.com/bruceharrison1984" target="_blank">
+            <Image
+              alt={'github_logo'}
+              src={'/assets/github_logo.png'}
+              height={28}
+              width={28}
+              quality={100}
+            />
+          </Link>
+          <Link
+            href="https://www.linkedin.com/in/bruceleeharrison/"
+            target="_blank"
+          >
+            <Image
+              alt={'linkedin_logo'}
+              src={'/assets/linkedin_logo.png'}
+              height={28}
+              width={28}
+              quality={100}
+            />
+          </Link>
         </div>
       </nav>
       <Dialog as="div" open={mobileMenuOpen} onClose={setMobileMenuOpen}>
