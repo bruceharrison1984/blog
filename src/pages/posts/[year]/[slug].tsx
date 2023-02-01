@@ -1,4 +1,5 @@
 import { GetStaticPaths, GetStaticProps, NextPage } from 'next';
+import { MarkdownNextImage } from '@/utils/MarkdownNextImage';
 import { TableOfContents } from '@/components/tableOfContents/TableOfContents';
 import {
   createPageFromMarkdown,
@@ -7,30 +8,10 @@ import {
 import { getMDXComponent } from 'mdx-bundler/client';
 import { useMemo } from 'react';
 import Head from 'next/head';
-import Image, { ImageProps } from 'next/image';
 
 type HowToPageProps = {
   metadata: Record<string, string>;
   pageContent: string;
-};
-
-const NextImage = ({
-  src,
-  className,
-  height,
-  width,
-  alt,
-}: React.ImgHTMLAttributes<HTMLImageElement>) => {
-  // eslint-disable-next-line jsx-a11y/alt-text
-  return (
-    <Image
-      className={`${className} rounded-lg mx-auto`}
-      src={src!}
-      height={height as number}
-      width={width as number}
-      alt={alt!}
-    />
-  );
 };
 
 const HowToPage: NextPage<HowToPageProps> = ({ metadata, pageContent }) => {
@@ -42,7 +23,7 @@ const HowToPage: NextPage<HowToPageProps> = ({ metadata, pageContent }) => {
       </Head>
       <div className="md:flex justify-center">
         <article className="prose-sm md:prose flex-1 md:mr-5">
-          <Component components={{ img: NextImage }} />
+          <Component components={{ img: MarkdownNextImage }} />
         </article>
         <TableOfContents />
       </div>

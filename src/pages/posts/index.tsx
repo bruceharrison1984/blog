@@ -1,6 +1,6 @@
 import { GetStaticProps, NextPage } from 'next';
 import { PostListItemProps } from '@/components/postList/PostListItem';
-import { recursivelyGetMetadata } from '@/utils/markdown';
+import { getPosts } from '@/utils/postFetcher';
 import PostList from '@/components/postList/PostList';
 
 type PostsPageProps = {
@@ -12,7 +12,7 @@ const PostsPage: NextPage<PostsPageProps> = ({ posts }) => (
 );
 
 export const getStaticProps: GetStaticProps = async () => {
-  const postMetadata = await recursivelyGetMetadata('posts', 'content');
+  const postMetadata = await getPosts('posts', 'content');
   return {
     props: {
       posts: postMetadata.map<PostListItemProps>((x) => ({

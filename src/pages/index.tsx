@@ -1,11 +1,9 @@
-import { CertificationList } from '@/components/certificationList/CertificationList';
 import { CredlyCertificate } from '@/types/CredlyCertificates';
 import { GetStaticProps, NextPage } from 'next';
 import { PostListItemProps } from '@/components/postList/PostListItem';
 import { RepoMetadata } from '@/types/RepoMetadata';
-import { getCertifications } from '@/utils/certificateFetcher';
+import { getPosts } from '@/utils/postFetcher';
 import { getRepos } from '@/utils/repoFetcher';
-import { recursivelyGetMetadata } from '@/utils/markdown';
 import PostList from '@/components/postList/PostList';
 import RepoList from '@/components/repoList/RepoList';
 
@@ -35,7 +33,7 @@ const Home: NextPage<HomePageProps> = ({ posts, repos, certifications }) => {
 };
 
 export const getStaticProps: GetStaticProps = async () => {
-  const postMetadata = await recursivelyGetMetadata('posts', 'content', 3);
+  const postMetadata = await getPosts('posts', 'content', 3);
   const repoMetadata = await getRepos(3);
 
   return {
