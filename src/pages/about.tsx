@@ -10,7 +10,7 @@ const About = () => {
         height={128}
         width={128}
         quality={100}
-        className="rounded-full border-solid border-black border-opacity-40 border-2 mx-auto"
+        className="rounded-full border-solid border-black border-opacity-40 border-2 mx-auto shadow-lg"
       />
       <p className="indent-4">
         I am a software developer from St. Louis, who lives in the Midwest.

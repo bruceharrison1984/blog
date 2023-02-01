@@ -19,10 +19,13 @@ export const Navbar = ({ currentPath }: { currentPath: string }) => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   return (
-    <div className="absolute w-full p-3 lg:px-8 backdrop-blur-lg border-b-2 border-black border-opacity-50 z-10">
+    <div className="absolute w-full p-3 lg:px-8 backdrop-blur-sm border-b-2 border-black border-opacity-50 z-10">
       <nav className="flex items-center justify-between" aria-label="Global">
         <div className="flex lg:flex-1">
           <span className={`${raj.className} text-2xl`}>blh</span>
+        </div>
+        <div className="flex lg:flex-1 lg:hidden">
+          <span>{navigation.find((x) => x.href === currentPath)?.name}</span>
         </div>
         <div className="flex lg:hidden">
           <button
@@ -80,9 +83,9 @@ export const Navbar = ({ currentPath }: { currentPath: string }) => {
         </div>
       </nav>
       <Dialog as="div" open={mobileMenuOpen} onClose={setMobileMenuOpen}>
-        <Dialog.Panel className="fixed inset-0 z-10 overflow-y-auto bg-white px-6 py-6 lg:hidden">
+        <Dialog.Panel className="fixed inset-0 z-10 overflow-y-auto bg-white px-6 py-6 lg:hidden h-fit rounded-b-lg shadow-lg">
           <div className="flex items-center justify-between">
-            <span className={`${raj.className} text-2xl`}>blh</span>
+            <span className={`${raj.className} text-2xl`}></span>
             <button
               type="button"
               className="-m-2.5 rounded-md p-2.5 text-gray-700"
@@ -99,19 +102,16 @@ export const Navbar = ({ currentPath }: { currentPath: string }) => {
                   <Link
                     key={item.name}
                     href={item.href}
-                    className="-mx-3 block rounded-lg py-2 px-3 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-400/10"
+                    className={`-mx-3 block rounded-lg py-2 px-3 text-base font-semibold leading-7 text-gray-900 ${
+                      currentPath === item.href
+                        ? 'bg-purple-500 bg-opacity-50 cursor-default'
+                        : 'hover:bg-purple-500 hover:bg-opacity-20'
+                    }`}
+                    onClick={() => setMobileMenuOpen(false)}
                   >
                     {item.name}
                   </Link>
                 ))}
-              </div>
-              <div className="py-6">
-                <a
-                  href="#"
-                  className="-mx-3 block rounded-lg py-2.5 px-3 text-base font-semibold leading-6 text-gray-900 hover:bg-gray-400/10"
-                >
-                  Log in
-                </a>
               </div>
             </div>
           </div>
