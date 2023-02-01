@@ -1,6 +1,9 @@
+import { CertificationList } from '@/components/certificationList/CertificationList';
+import { CredlyCertificate } from '@/types/CredlyCertificates';
 import { GetStaticProps, NextPage } from 'next';
 import { PostListItemProps } from '@/components/postList/PostListItem';
 import { RepoMetadata } from '@/types/RepoMetadata';
+import { getCertifications } from '@/utils/certificateFetcher';
 import { getRepos } from '@/utils/repoFetcher';
 import { recursivelyGetMetadata } from '@/utils/markdown';
 import PostList from '@/components/postList/PostList';
@@ -9,9 +12,10 @@ import RepoList from '@/components/repoList/RepoList';
 type HomePageProps = {
   posts?: PostListItemProps[];
   repos?: RepoMetadata[];
+  certifications: CredlyCertificate[];
 };
 
-const Home: NextPage<HomePageProps> = ({ posts, repos }) => {
+const Home: NextPage<HomePageProps> = ({ posts, repos, certifications }) => {
   return (
     <div className="space-y-6">
       <div>

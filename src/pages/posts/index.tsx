@@ -7,16 +7,9 @@ type PostsPageProps = {
   posts?: PostListItemProps[];
 };
 
-const PostsPage: NextPage<PostsPageProps> = ({ posts }) => {
-  return (
-    <>
-      <h2 className="w-full lg:w-2/3 inline-block sm:hidden font-bold mb-2">
-        Posts
-      </h2>
-      <PostList items={posts || []} />
-    </>
-  );
-};
+const PostsPage: NextPage<PostsPageProps> = ({ posts }) => (
+  <PostList items={posts || []} />
+);
 
 export const getStaticProps: GetStaticProps = async () => {
   const postMetadata = await recursivelyGetMetadata('posts', 'content');
