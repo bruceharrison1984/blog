@@ -31,10 +31,9 @@ const HowToPage: NextPage<HowToPageProps> = ({ metadata, pageContent }) => {
   );
 };
 
-export const getStaticProps: GetStaticProps<
-  any,
-  { slug: string; year: string }
-> = async ({ params }) => {
+export const getStaticProps: GetStaticProps<any, any> = async (props) => {
+  const { params } = props;
+
   return {
     props: await createPageFromMarkdown('posts', params!.year, params!.slug),
   };

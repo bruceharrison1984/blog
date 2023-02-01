@@ -8,13 +8,24 @@ import remarkGfm from 'remark-gfm';
 import type { Plugin } from 'unified';
 import type { Root } from 'hast';
 
+/**
+ * Get all markdown files recursively from a directory.
+ * All paths are cleaned up into a form that resembles a url for getStaticProps
+ * @param directoryPath Child directory to scan
+ * @param baseDir The base content directory
+ * @returns Array of URLs that correspond to the markdown file structure
+ */
 export const recursivelyGetMarkdownFiles = async (
   directoryPath: string,
   baseDir = 'content'
-) =>
-  (await recursiveRead([baseDir, directoryPath].join('/'))).map((x) =>
+) => {
+  const filePaths = await recursiveRead([baseDir, directoryPath].join('/'));
+  const cleanPaths = filePaths.map((x) =>
     x.replace('.md', '').replace(baseDir, '').replaceAll('\\', '/')
   );
+
+  return cleanPaths;
+};
 
 /** We have to override the type so mdx-bundler can make use of this plugin */
 const imageSizeWrapper = imageSize as Plugin<[Options] | void[], Root, string>;
