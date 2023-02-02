@@ -1,5 +1,6 @@
 import { RepoMetadata } from '@/types/RepoMetadata';
 import { StarIcon } from '@heroicons/react/24/outline';
+import { blurImage } from '@/utils/MarkdownNextImage';
 import Image from 'next/image';
 import Link from 'next/link';
 
@@ -26,10 +27,13 @@ export const RepoListItem = ({
           <Image
             alt={'github_logo'}
             src={'/assets/github_logo.png'}
+            blurDataURL={blurImage}
+            placeholder={'blur'}
             height={48}
             width={48}
             quality={100}
             className="my-auto mx-5"
+            sizes="(max-width: 768px) 100vw,(max-width: 1200px) 50vw,33vw"
           />
         </div>
       </div>
