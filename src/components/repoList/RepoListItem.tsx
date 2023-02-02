@@ -27,8 +27,6 @@ export const RepoListItem = ({
           <Image
             alt={'github_logo'}
             src={'/assets/github_logo.png'}
-            blurDataURL={blurImage}
-            placeholder={'blur'}
             height={48}
             width={48}
             quality={100}
