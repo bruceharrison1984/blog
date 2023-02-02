@@ -66,6 +66,7 @@ export const Navbar = ({ currentPath }: { currentPath: string }) => {
               height={28}
               width={28}
               quality={100}
+              title="View my Github profile"
             />
           </Link>
           <Link
@@ -78,6 +79,7 @@ export const Navbar = ({ currentPath }: { currentPath: string }) => {
               height={28}
               width={28}
               quality={100}
+              title="View my LinkedIn profile"
             />
           </Link>
         </div>

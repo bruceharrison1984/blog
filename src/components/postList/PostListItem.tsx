@@ -31,6 +31,7 @@ export const PostListItem = ({
       >
         <Image
           alt={title}
+          title={title}
           src={imageSrc}
           fill
           quality={100}

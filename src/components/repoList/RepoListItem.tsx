@@ -26,6 +26,7 @@ export const RepoListItem = ({
         <div className="flex flex-col h-full">
           <Image
             alt={'github_logo'}
+            title={full_name}
             src={'/assets/github_logo.png'}
             height={48}
             width={48}
