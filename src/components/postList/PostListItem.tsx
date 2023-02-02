@@ -40,7 +40,7 @@ export const PostListItem = ({
         />
       </div>
       <div className="border-r border-b border-l border-t w-full border-black border-opacity-10 rounded-b-none rounded-r-lg p-2 flex flex-col justify-between leading-normal space-y-2 overflow-hidden">
-        <div className="text-gray-900 font-bold md:text-xl truncate">
+        <div className="text-gray-900 font-bold md:text-xl truncate underline">
           <Link href={url}>{title}</Link>
         </div>
 
