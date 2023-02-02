@@ -24,9 +24,9 @@ export const PostListItem = ({
       <div
         className="h-auto w-48 bg-cover rounded-l-lg text-center overflow-hidden relative"
         style={{
-          borderTop: 'solid 1px rgb(156 163 175 / 1)',
-          borderBottom: 'solid 1px rgb(156 163 175 / 1)',
-          borderLeft: 'solid 1px rgb(156 163 175 / 1)',
+          borderTop: 'solid 1px rgb(0 0 0 / .1)',
+          borderBottom: 'solid 1px rgb(0 0 0 / .1)',
+          borderLeft: 'solid 1px rgb(0 0 0 / .1)',
         }}
       >
         <Image
@@ -39,7 +39,7 @@ export const PostListItem = ({
           sizes="(max-width: 768px) 100vw,(max-width: 1200px) 50vw,33vw"
         />
       </div>
-      <div className="border-r border-b border-l border-t w-full border-gray-400 rounded-b-none rounded-r-lg p-2 flex flex-col justify-between leading-normal space-y-2 overflow-hidden">
+      <div className="border-r border-b border-l border-t w-full border-black border-opacity-10 rounded-b-none rounded-r-lg p-2 flex flex-col justify-between leading-normal space-y-2 overflow-hidden">
         <div className="text-gray-900 font-bold md:text-xl truncate">
           <Link href={url}>{title}</Link>
         </div>

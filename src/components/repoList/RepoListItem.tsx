@@ -18,9 +18,9 @@ export const RepoListItem = ({
       <div
         className="bg-cover rounded-l-lg flex-shrink-0"
         style={{
-          borderTop: 'solid 1px rgb(156 163 175 / 1)',
-          borderBottom: 'solid 1px rgb(156 163 175 / 1)',
-          borderLeft: 'solid 1px rgb(156 163 175 / 1)',
+          borderTop: 'solid 1px rgb(0 0 0 / .1)',
+          borderBottom: 'solid 1px rgb(0 0 0 / .1)',
+          borderLeft: 'solid 1px rgb(0 0 0 / .1)',
         }}
       >
         <div className="flex flex-col h-full">
@@ -36,7 +36,7 @@ export const RepoListItem = ({
           />
         </div>
       </div>
-      <div className="border-r border-b border-t w-full border-gray-400 rounded-b-none rounded-r-lg p-2 justify-between leading-normal flex-shrink overflow-hidden space-y-2">
+      <div className="border-r border-b border-t w-full border-black border-opacity-10 rounded-b-none rounded-r-lg p-2 justify-between leading-normal flex-shrink overflow-hidden space-y-2">
         <div className="text-gray-900 font-bold md:text-xl truncate">
           <Link href={html_url}>{full_name}</Link>
         </div>

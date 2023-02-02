@@ -39,7 +39,7 @@ export const TableOfContents = () => {
   return (
     <nav className="invisible md:visible flex-1">
       {headings.length ? (
-        <div className="absolute shadow-lg rounded-lg bg-white bg-opacity-25 p-5 w-fit">
+        <div className="absolute shadow-lg rounded-lg bg-white bg-opacity-25 p-5 w-fit border-black border border-opacity-10">
           <ol>{headings.map((heading) => makeListItem(heading))}</ol>
         </div>
       ) : undefined}
