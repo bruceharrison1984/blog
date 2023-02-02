@@ -22,6 +22,7 @@ const HowToPage: NextPage<HowToPageProps> = ({ metadata, pageContent }) => {
         <title>{metadata.title}</title>
       </Head>
       <div className="md:flex justify-center">
+        <div className="flex-1">{/* empty div for layout */}</div>
         <article className="flex-1 prose-sm md:prose md:mr-5">
           <Component components={{ img: MarkdownNextImage }} />
         </article>
