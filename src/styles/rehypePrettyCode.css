@@ -1,5 +1,7 @@
 code {
   counter-reset: line;
+  color: var(--tw-prose-pre-code) !important;
+  background-color: var(--tw-prose-pre-bg) !important;
 }
 
 pre > code {
@@ -24,4 +26,8 @@ code[data-line-numbers-max-digits='2'] > .line::before {
 
 code[data-line-numbers-max-digits='3'] > .line::before {
   width: 3rem;
+}
+
+.prose-sm :where(pre):not(:where([class~='not-prose'] *)) {
+  background-color: #1f2937 !important;
 }
