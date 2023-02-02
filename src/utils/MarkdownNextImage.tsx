@@ -25,5 +25,6 @@ export const MarkdownNextImage = ({
     height={height as number}
     width={width as number}
     alt={alt!}
+    sizes="(max-width: 768px) 100vw,(max-width: 1200px) 50vw,33vw"
   />
 );

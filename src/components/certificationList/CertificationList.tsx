@@ -14,7 +14,13 @@ export const CertificationList = ({
         href={`https://www.credly.com/badges/${x.id}/public_url`}
         target="_blank"
       >
-        <Image src={x.image_url} height={96} width={96} alt={x.accepted_at} />
+        <Image
+          src={x.image_url}
+          height={96}
+          width={96}
+          alt={x.accepted_at}
+          sizes="(max-width: 768px) 100vw,(max-width: 1200px) 50vw,33vw"
+        />
       </Link>
     ))}
   </div>
