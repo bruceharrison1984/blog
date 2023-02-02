@@ -18,7 +18,8 @@ export const TableOfContents = () => {
 
   const scrollToElement = (elementId: string) => {
     const element = document.getElementById(elementId);
-    if (element) element.scrollIntoView({ behavior: 'smooth' });
+    if (element)
+      element.scrollIntoView({ behavior: 'smooth', block: 'center' });
   };
 
   const makeListItem = (heading: PostHeading) => (
@@ -38,8 +39,8 @@ export const TableOfContents = () => {
   return (
     <>
       {headings.length ? (
-        <nav className="flex-none invisible md:visible">
-          <div className="prose-sm shadow-lg rounded-lg bg-white bg-opacity-25 p-1">
+        <nav className="invisible md:visible">
+          <div className="shadow-lg rounded-lg bg-white bg-opacity-25 p-5">
             <ol>{headings.map((heading) => makeListItem(heading))}</ol>
           </div>
         </nav>
