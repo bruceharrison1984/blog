@@ -7,6 +7,7 @@ export type PostListItemProps = {
   description: string;
   url: string;
   tags?: string[];
+  publishDate: Date;
 };
 
 export const PostListItem = ({
@@ -15,11 +16,15 @@ export const PostListItem = ({
   description,
   url,
   tags,
+  publishDate,
 }: PostListItemProps) => {
+  const serverSafeDate = `${publishDate.getUTCMonth() + 1}/${
+    publishDate.getUTCDate() + 1
+  }/${publishDate.getUTCFullYear()}`;
   return (
     <div
       key={title}
-      className="w-full lg:w-2/3 flex shadow-lg rounded-lg bg-white bg-opacity-25"
+      className="w-full lg:w-2/3 flex shadow-lg rounded-lg bg-white bg-opacity-25 relative"
     >
       <div
         className="h-auto w-48 bg-cover rounded-l-lg text-center overflow-hidden relative"
@@ -40,9 +45,12 @@ export const PostListItem = ({
         />
       </div>
       <div className="border-r border-b border-l border-t w-full border-black border-opacity-10 rounded-b-none rounded-r-lg p-2 flex flex-col justify-between leading-normal space-y-2 overflow-hidden">
-        <div className="text-gray-900 font-bold md:text-xl truncate underline">
-          <Link href={url}>{title}</Link>
+        <div className="text-gray-900  md:text-xl">
+          <Link href={url} className="truncate underline font-bold">
+            {title}
+          </Link>
         </div>
+        <div className="text-xs no-underline">{serverSafeDate}</div>
 
         <p className="text-gray-700 text-base">{description}</p>
 

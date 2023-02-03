@@ -21,6 +21,7 @@ export const getStaticProps: GetStaticProps = async () => {
         description: x.metaDesc,
         url: x.currentUrl,
         tags: x.tags,
+        publishDate: x.date,
       })),
     },
   };

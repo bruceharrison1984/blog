@@ -5,8 +5,8 @@ legacyUrl: https://blog.bruceleeharrison.com/2021/03/02/aws-secrets-manager-terr
 headerImage: /assets/posts/2021/aws-secrets-manager-terraform-1.png
 date: !!timestamp '2021-03-02'
 tags:
-  - azure
-  - powershell
+  - aws
+  - terraform
 ---
 
 # AWS Secrets Manager & Terraform

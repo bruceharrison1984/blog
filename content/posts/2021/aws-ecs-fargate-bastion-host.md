@@ -5,8 +5,8 @@ legacyUrl: https://blog.bruceleeharrison.com/2021/03/02/aws-ecs-fargate-bastion-
 headerImage: /assets/posts/2021/aws-ecs-fargate-bastion-host-1.webp
 date: !!timestamp '2021-03-02'
 tags:
-  - azure
-  - powershell
+  - aws
+  - docker
 ---
 
 # AWS ECS/Fargate Bastion Host
