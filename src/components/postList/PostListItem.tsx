@@ -24,10 +24,10 @@ export const PostListItem = ({
   return (
     <div
       key={title}
-      className="w-full lg:w-2/3 flex shadow-lg rounded-lg bg-white bg-opacity-25 relative"
+      className="w-full lg:w-2/3 flex flex-col md:flex-row shadow-lg rounded-lg bg-white bg-opacity-25 relative"
     >
       <div
-        className="h-auto w-48 bg-cover rounded-l-lg text-center overflow-hidden relative"
+        className="h-24 md:h-auto md:w-48 bg-cover rounded-t-lg md:rounded-l-lg md:rounded-tr-none text-center overflow-hidden relative"
         style={{
           borderTop: 'solid 1px rgb(0 0 0 / .1)',
           borderBottom: 'solid 1px rgb(0 0 0 / .1)',
@@ -44,9 +44,9 @@ export const PostListItem = ({
           sizes="(max-width: 768px) 100vw,(max-width: 1200px) 50vw,33vw"
         />
       </div>
-      <div className="border-r border-b border-l border-t w-full border-black border-opacity-10 rounded-b-none rounded-r-lg p-2 flex flex-col justify-between leading-normal space-y-2 overflow-hidden">
-        <div className="text-gray-900  md:text-xl">
-          <Link href={url} className="truncate underline font-bold">
+      <div className="md:border-r md:border-b md:border-l md:border-t w-full border-black border-opacity-10 rounded-b-none rounded-r-lg p-2 flex flex-col justify-between leading-normal space-y-2 overflow-hidden">
+        <div className="text-gray-900  md:text-xl truncate">
+          <Link href={url} className="underline font-bold">
             {title}
           </Link>
         </div>
