@@ -1,7 +1,6 @@
 ---
 title: Exporting Prometheus Metrics from ECS Fargate in to AMP
 metaDesc: Getting AWS Prometheus and ECS Fargate communicating for metric gathering of containerized processes
-legacyUrl: https://blog.bruceleeharrison.com/2021/08/19/exporting-prometheus-metrics-from-ecs-fargate-in-to-amp/
 date: !!timestamp '2021-08-19'
 tags:
   - aws

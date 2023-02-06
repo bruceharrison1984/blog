@@ -1,7 +1,6 @@
 ---
 title: Running a DACPAC On Azure Synapse From a DevOps-Hosted Agent
 metaDesc: Fix for running a DACPAC against Synapse on DevOps runners that don't support it
-legacyUrl: https://blog.bruceleeharrison.com/2020/05/05/running-a-dacpac-on-azure-synapse-from-a-devops-hosted-agent/
 date: !!timestamp '2020-05-05'
 tags:
   - azure

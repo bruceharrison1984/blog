@@ -1,7 +1,6 @@
 ---
 title: AWS Secrets Manager & Terraform
 metaDesc: How to use the AWS Terraform provider to store secrets in AWS Secret Manager
-legacyUrl: https://blog.bruceleeharrison.com/2021/03/02/aws-secrets-manager-terraform
 headerImage: /assets/posts/2021/aws-secrets-manager-terraform-1.png
 date: !!timestamp '2021-03-02'
 tags:

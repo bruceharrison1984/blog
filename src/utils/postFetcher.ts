@@ -10,15 +10,22 @@ export const getPosts = async (
 ) => {
   const files = await recursivelyGetMarkdownFiles(directoryPath, baseDir);
   const metadata = await Promise.all(
-    files.map((file) => {
+    files.map((file, i) => {
       const markdownFile = fs.readFileSync(`${[baseDir, file].join('/')}.md`);
       const { data } = matter(markdownFile);
-      data.currentUrl = file;
-      return data as DocumentMetadata;
+
+      const metadata = data as DocumentMetadata;
+      metadata.currentUrl = file;
+      return metadata;
     })
   );
-  const sortedMetadata = metadata
-    .sort((x, y) => x.date.valueOf() - y.date.valueOf())
-    .reverse();
-  return sortedMetadata.slice(0, limit || sortedMetadata.length);
+  const sortedMetadata = metadata.sort(
+    (x, y) => y.date.valueOf() - x.date.valueOf()
+  );
+  const hydratedMetadata = sortedMetadata.map((x, i) => {
+    x.previousPost = sortedMetadata[i + 1];
+    x.nextPost = sortedMetadata[i - 1];
+    return x;
+  });
+  return hydratedMetadata.slice(0, limit || sortedMetadata.length);
 };

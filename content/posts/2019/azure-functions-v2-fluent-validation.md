@@ -1,7 +1,6 @@
 ---
 title: 'Azure V2 Functions - FluentValidation'
 metaDesc: Setup an Azure Function project with seamless request validation
-legacyUrl: https://blog.bruceleeharrison.com/2019/08/29/azure-function-filters/
 date: !!timestamp '2019-09-04'
 tags:
   - azure

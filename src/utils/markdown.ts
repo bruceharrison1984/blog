@@ -1,3 +1,4 @@
+import { DocumentMetadata } from '@/types/DocumentMetadata';
 import { bundleMDX } from 'mdx-bundler';
 import imageSize, { Options } from 'rehype-img-size';
 import recursiveRead from 'recursive-readdir';
@@ -36,7 +37,7 @@ export const createPageFromMarkdown = async (
   slug: string,
   baseDir = 'content'
 ) => {
-  const { code, frontmatter } = await bundleMDX({
+  const { code, frontmatter } = await bundleMDX<DocumentMetadata>({
     file: `${[baseDir, directoryPath, year, slug].join('/')}.md`,
     cwd: process.cwd(),
     mdxOptions: (o) => {
