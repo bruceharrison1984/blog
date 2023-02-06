@@ -65,9 +65,9 @@ export const TableOfContents = () => {
   );
 
   return (
-    <nav className="invisible md:visible flex-1">
+    <nav className="hidden md:block flex-1">
       {headings.length ? (
-        <div className="absolute shadow-lg rounded-lg bg-white bg-opacity-25 p-5 w-fit border-black border border-opacity-10">
+        <div className="absolute shadow-lg rounded-lg bg-white bg-opacity-25 p-5 w-fit border-black border border-opacity-10 whitespace-nowrap">
           <ol>
             {nestedHeadings.map((headings) => makeNestedListItem(headings))}
           </ol>
