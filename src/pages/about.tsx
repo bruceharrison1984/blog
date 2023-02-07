@@ -17,6 +17,9 @@ const About = ({ certifications }: { certifications: CredlyCertificate[] }) => {
           quality={100}
           className="rounded-full border-solid border-black border-opacity-40 border-2 mx-auto shadow-lg"
         />
+        <div className="flex flex-col items-center">
+          <span className="font-bold text-xl -mt-5">Bruce Lee Harrison</span>
+        </div>
         <p className="indent-4">
           I am a software developer from St. Louis, who lives in the Midwest.
           Growing up, I was always fascinated with machines and technology.
