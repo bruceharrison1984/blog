@@ -19,7 +19,7 @@ export const Navbar = ({ currentPath }: { currentPath: string }) => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   return (
-    <div className="absolute w-full p-3 lg:px-8 backdrop-blur-sm border-b-2 border-black border-opacity-50 z-10">
+    <div className="fixed w-full p-3 lg:px-8 backdrop-blur-sm border-b-2 border-black border-opacity-50 z-10">
       <nav className="flex items-center justify-between" aria-label="Global">
         <div className="flex lg:flex-1">
           <span className={`${raj.className} text-2xl`}>blh</span>

@@ -4,12 +4,11 @@
 @import './rehypePrettyCode.css';
 
 ::-webkit-scrollbar {
-  /* display: block; */
   width: 10px;
 }
 
 ::-webkit-scrollbar-thumb {
-  background-color: rgba(0, 51, 255, 0.3);
+  background-color: rgba(0, 51, 255, 0.4);
 }
 
 ::-webkit-scrollbar-track-piece:start {

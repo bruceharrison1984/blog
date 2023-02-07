@@ -11,7 +11,7 @@ type PostFooterProps = {
 };
 
 export const PostFooter = ({ nextPost, previousPost }: PostFooterProps) => (
-  <div className="flex w-full mt-20">
+  <div className="flex w-full mt-20 pb-10">
     <div className="flex-1 ">
       {previousPost && (
         <Link
