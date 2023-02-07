@@ -7,7 +7,7 @@ export const CertificationList = ({
 }: {
   certifications: CredlyCertificate[];
 }) => (
-  <div className="flex space-x-5">
+  <div className="flex space-x-5 mb-5">
     {certifications.map((x) => (
       <Link
         key={x.id}
