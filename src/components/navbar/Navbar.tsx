@@ -22,7 +22,12 @@ export const Navbar = ({ currentPath }: { currentPath: string }) => {
     <div className="fixed w-full p-3 lg:px-8 backdrop-blur-sm border-b-2 border-black border-opacity-50 z-10">
       <nav className="flex items-center justify-between" aria-label="Global">
         <div className="flex lg:flex-1">
-          <span className={`${raj.className} text-2xl`}>blh</span>
+          <span
+            className={`${raj.className} text-2xl`}
+            title="Bruce Lee Harrison"
+          >
+            blh
+          </span>
         </div>
         <div className="flex lg:flex-1 lg:hidden">
           <span>{navigation.find((x) => x.href === currentPath)?.name}</span>
@@ -86,8 +91,7 @@ export const Navbar = ({ currentPath }: { currentPath: string }) => {
       </nav>
       <Dialog as="div" open={mobileMenuOpen} onClose={setMobileMenuOpen}>
         <Dialog.Panel className="fixed inset-0 z-10 overflow-y-auto bg-white px-6 py-6 lg:hidden h-fit rounded-b-lg shadow-lg">
-          <div className="flex items-center justify-between">
-            <span className={`${raj.className} text-2xl`}></span>
+          <div className="flex items-center justify-end">
             <button
               type="button"
               className="-m-2.5 rounded-md p-2.5 text-gray-700"
@@ -97,7 +101,7 @@ export const Navbar = ({ currentPath }: { currentPath: string }) => {
               <XMarkIcon className="h-6 w-6" aria-hidden="true" />
             </button>
           </div>
-          <div className="mt-6 flow-root">
+          <div className="mt-1 flow-root">
             <div className="-my-6 divide-y divide-gray-500/10">
               <div className="space-y-2 py-6">
                 {navigation.map((item) => (
