@@ -8,7 +8,9 @@ type PostsPageProps = {
 };
 
 const PostsPage: NextPage<PostsPageProps> = ({ posts }) => (
-  <PostList items={posts || []} />
+  <div className="mb-10">
+    <PostList items={posts || []} />
+  </div>
 );
 
 export const getStaticProps: GetStaticProps = async () => {

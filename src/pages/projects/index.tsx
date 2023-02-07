@@ -8,7 +8,9 @@ type ProjectsPageProps = {
 };
 
 const ProjectsPage: NextPage<ProjectsPageProps> = ({ repos }) => (
-  <RepoList repos={repos || []} />
+  <div className="mb-10">
+    <RepoList repos={repos || []} />
+  </div>
 );
 
 export const getStaticProps: GetStaticProps = async () => {
