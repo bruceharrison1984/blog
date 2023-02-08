@@ -50,6 +50,8 @@ export const compileAndCacheMarkdown = async () => {
   const contentHash = await getFileHashes();
   const cacheFilename = `markdown-cache.${contentHash[0].hash}`;
 
+  console.log('1');
+
   if (existsSync(cacheFilename)) {
     console.info("\n-= Files haven't changed, using cache =-");
     const cacheFile = readFileSync(cacheFilename);
@@ -59,7 +61,11 @@ export const compileAndCacheMarkdown = async () => {
     return existingCacheData;
   }
 
+  console.log('2');
+
   const filePaths = await recursiveRead(CONTENT_DIR);
+
+  console.log('3');
 
   const processedFiles = await Promise.all(
     filePaths.map(async (x) => {
@@ -78,6 +84,8 @@ export const compileAndCacheMarkdown = async () => {
       } as MarkdownFile;
     })
   );
+
+  console.log('4');
 
   const sortedProcessedFiles = processedFiles.sort(
     (x, y) => y.metadata.date.valueOf() - x.metadata.date.valueOf()
