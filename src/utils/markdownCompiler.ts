@@ -15,6 +15,7 @@ const CONTENT_DIR = 'content';
 
 type MarkdownFile = {
   filepath: string;
+  section: string;
   url: string;
   year: number;
   slug: string;
@@ -69,17 +70,22 @@ export const compileAndCacheMarkdown = async () => {
       if (!regexResult) throw new Error('Regex path parsing failed!');
 
       const [_, section, year, slug] = regexResult;
-      const fileHash = contentHash.find((x) => x.name.includes(slug));
-      const processedFile = await createPageFromMarkdown(section, year, slug);
+      const { hash } = contentHash.find((x) => x.name.includes(slug))!;
+      const { pageContent, metadata } = await createPageFromMarkdown(
+        section,
+        year,
+        slug
+      );
 
       return {
         filepath: x,
         url: `/${[section, year, slug].join('/')}`,
+        section,
         year: Number.parseInt(year),
-        slug: slug,
-        hash: fileHash?.hash,
-        pageContent: processedFile.code,
-        metadata: processedFile.frontmatter,
+        slug,
+        hash,
+        pageContent,
+        metadata,
       } as MarkdownFile;
     })
   );
@@ -141,7 +147,7 @@ export const createPageFromMarkdown = async (
     },
   });
 
-  return { code, frontmatter };
+  return { pageContent: code, metadata: frontmatter };
 };
 
 /**
