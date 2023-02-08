@@ -61,7 +61,7 @@ export const compileAndCacheMarkdown = async () => {
 
   const filePaths = await (
     await recursiveRead(CONTENT_DIR)
-  ).map((x) => x.replace('/', '\\')); // make paths cross-platform
+  ).map((x) => x.replaceAll('/', '\\')); // make paths cross-platform
 
   const processedFiles = await Promise.all(
     filePaths.map(async (x) => {
@@ -69,16 +69,10 @@ export const compileAndCacheMarkdown = async () => {
 
       const regexResult = pathRegex.exec(x);
       if (!regexResult) throw new Error('Regex path parsing failed!');
-      console.log(regexResult);
+
       const [_, section, year, slug] = regexResult;
-      console.log('1');
-
       const fileHash = contentHash.find((x) => x.name.includes(slug));
-      console.log('2');
-
       const processedFile = await createPageFromMarkdown(section, year, slug);
-
-      console.log('3');
 
       return {
         filepath: x,
