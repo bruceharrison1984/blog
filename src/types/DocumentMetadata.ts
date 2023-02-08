@@ -5,6 +5,11 @@ export type DocumentMetadata = {
   date: Date;
   tags?: string[];
   currentUrl: string;
-  previousPost?: DocumentMetadata;
-  nextPost?: DocumentMetadata;
+  previousPost?: SiblingDocument;
+  nextPost?: SiblingDocument;
+};
+
+export type SiblingDocument = {
+  title: string;
+  url: string;
 };

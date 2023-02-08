@@ -2,12 +2,12 @@ import {
   ChevronDoubleLeftIcon,
   ChevronDoubleRightIcon,
 } from '@heroicons/react/24/outline';
-import { DocumentMetadata } from '@/types/DocumentMetadata';
+import { SiblingDocument } from '@/types/DocumentMetadata';
 import Link from 'next/link';
 
 type PostFooterProps = {
-  nextPost?: DocumentMetadata;
-  previousPost?: DocumentMetadata;
+  nextPost?: SiblingDocument;
+  previousPost?: SiblingDocument;
 };
 
 export const PostFooter = ({ nextPost, previousPost }: PostFooterProps) => (
@@ -15,7 +15,7 @@ export const PostFooter = ({ nextPost, previousPost }: PostFooterProps) => (
     <div className="flex-1 ">
       {previousPost && (
         <Link
-          href={previousPost.currentUrl}
+          href={previousPost.url}
           className="shadow-lg rounded-lg bg-white bg-opacity-25 p-3 w-fit border-black border border-opacity-10 whitespace-nowrap prose-sm"
           title={previousPost.title}
         >
@@ -27,7 +27,7 @@ export const PostFooter = ({ nextPost, previousPost }: PostFooterProps) => (
     <div className="flex-0">
       {nextPost && (
         <Link
-          href={nextPost?.currentUrl}
+          href={nextPost.url}
           className="shadow-lg rounded-lg bg-white bg-opacity-25 p-3 w-fit border-black border border-opacity-10 whitespace-nowrap prose-sm"
           title={nextPost.title}
         >

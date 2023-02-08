@@ -23,8 +23,14 @@ export const getPosts = async (
     (x, y) => y.date.valueOf() - x.date.valueOf()
   );
   const hydratedMetadata = sortedMetadata.map((x, i) => {
-    x.previousPost = sortedMetadata[i + 1];
-    x.nextPost = sortedMetadata[i - 1];
+    x.previousPost = {
+      title: sortedMetadata[i + 1]?.title,
+      url: sortedMetadata[i + 1]?.currentUrl,
+    };
+    x.nextPost = {
+      title: sortedMetadata[i - 1]?.title,
+      url: sortedMetadata[i - 1]?.currentUrl,
+    };
     return x;
   });
   return hydratedMetadata.slice(0, limit || sortedMetadata.length);

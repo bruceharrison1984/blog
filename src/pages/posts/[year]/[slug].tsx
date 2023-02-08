@@ -4,11 +4,10 @@ import { MarkdownNextImage } from '@/components/markdownNextImage/MarkdownNextIm
 import { PostFooter } from '@/components/postFooter/postFooter';
 import { TableOfContents } from '@/components/tableOfContents/TableOfContents';
 import {
-  createPageFromMarkdown,
-  recursivelyGetMarkdownFiles,
-} from '@/utils/markdown';
+  compileAndCacheMarkdown,
+  getCachedPage,
+} from '@/utils/markdownCompiler';
 import { getMDXComponent } from 'mdx-bundler/client';
-import { getPosts } from '@/utils/postFetcher';
 import { useMemo } from 'react';
 import Head from 'next/head';
 
@@ -45,24 +44,26 @@ export const getStaticProps: GetStaticProps<
   { year: string; slug: string }
 > = async (props) => {
   const { params } = props;
-  const posts = await getPosts('posts');
-  const pageContent = await createPageFromMarkdown(
-    'posts',
-    params!.year,
-    params!.slug
+  const pageContent = await getCachedPage(
+    params!.slug,
+    Number.parseInt(params!.year)
   );
 
   return {
     props: {
-      pageContent,
-      postMetadata: posts.find((x) => x.currentUrl.includes(params!.slug)),
+      pageContent: pageContent?.pageContent,
+      postMetadata: pageContent?.metadata,
     },
   };
 };
 
-export const getStaticPaths: GetStaticPaths = async () => ({
-  paths: await recursivelyGetMarkdownFiles('posts'),
-  fallback: false,
-});
+export const getStaticPaths: GetStaticPaths = async () => {
+  const processedMarkdown = await compileAndCacheMarkdown();
+
+  return {
+    paths: processedMarkdown.map((x) => x.url),
+    fallback: false,
+  };
+};
 
 export default HowToPage;
