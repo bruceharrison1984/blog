@@ -65,8 +65,6 @@ export const compileAndCacheMarkdown = async () => {
 
   const processedFiles = await Promise.all(
     filePaths.map(async (x) => {
-      console.log(x);
-
       const regexResult = pathRegex.exec(x);
       if (!regexResult) throw new Error('Regex path parsing failed!');
 
@@ -85,8 +83,6 @@ export const compileAndCacheMarkdown = async () => {
       } as MarkdownFile;
     })
   );
-
-  console.log('4');
 
   const sortedProcessedFiles = processedFiles.sort(
     (x, y) => y.metadata.date.valueOf() - x.metadata.date.valueOf()
