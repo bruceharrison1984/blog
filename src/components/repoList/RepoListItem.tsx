@@ -1,6 +1,6 @@
 import { RepoMetadata } from '@/types/RepoMetadata';
 import { StarIcon } from '@heroicons/react/24/outline';
-import { blurImage } from '@/utils/MarkdownNextImage';
+import { blurImage } from '@/components/markdownNextImage/MarkdownNextImage';
 import Image from 'next/image';
 import Link from 'next/link';
 

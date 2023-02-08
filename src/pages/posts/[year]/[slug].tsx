@@ -1,6 +1,6 @@
 import { DocumentMetadata } from '@/types/DocumentMetadata';
 import { GetStaticPaths, GetStaticProps, NextPage } from 'next';
-import { MarkdownNextImage } from '@/utils/MarkdownNextImage';
+import { MarkdownNextImage } from '@/components/markdownNextImage/MarkdownNextImage';
 import { PostFooter } from '@/components/postFooter/postFooter';
 import { TableOfContents } from '@/components/tableOfContents/TableOfContents';
 import {
