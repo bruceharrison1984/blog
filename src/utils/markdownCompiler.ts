@@ -67,7 +67,7 @@ export const compileAndCacheMarkdown = async () => {
 
       const regexResult = pathRegex.exec(x);
       if (!regexResult) throw new Error('Regex path parsing failed!');
-
+      console.log(regexResult);
       const [_, section, year, slug] = regexResult;
       console.log('1');
 
