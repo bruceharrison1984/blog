@@ -7,12 +7,7 @@ import {
   compileAndCacheMarkdown,
   getCachedPage,
 } from '@/utils/markdownCompiler';
-import {
-  createPageFromMarkdown,
-  recursivelyGetMarkdownFiles,
-} from '@/utils/markdown';
 import { getMDXComponent } from 'mdx-bundler/client';
-import { getPosts } from '@/utils/postFetcher';
 import { useMemo } from 'react';
 import Head from 'next/head';
 
