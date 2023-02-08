@@ -28,6 +28,12 @@ const imageSizeWrapper = imageSize as Plugin<[Options] | void[], Root, string>;
 
 const pathRegex = new RegExp(/\\(.*)\\(\d{4})\\(.*).md$/);
 
+/**
+ * Retrieve a page out of the build cache
+ * @param slug Name of the slug to match
+ * @param year Name of the year to match
+ * @returns MarkdownFile object
+ */
 export const getCachedPage = async (slug: string, year: number) => {
   const contentHash = await getFileHashes();
   const cacheFilename = `markdown-cache.${contentHash[0].hash}`;
@@ -73,8 +79,12 @@ export const compileAndCacheMarkdown = async () => {
     })
   );
 
-  writeFileSync(cacheFilename, JSON.stringify(processedFiles, null, 2));
-  return processedFiles;
+  const sortedProcessedFiles = processedFiles.sort(
+    (x, y) => y.metadata.date.valueOf() - x.metadata.date.valueOf()
+  );
+
+  writeFileSync(cacheFilename, JSON.stringify(sortedProcessedFiles, null, 2));
+  return sortedProcessedFiles;
 };
 
 export const createPageFromMarkdown = async (
