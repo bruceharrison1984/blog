@@ -63,6 +63,8 @@ export const compileAndCacheMarkdown = async () => {
 
   const processedFiles = await Promise.all(
     filePaths.map(async (x) => {
+      console.log(x);
+
       const [_, section, year, slug] = pathRegex.exec(x)!;
       console.log('1');
 
