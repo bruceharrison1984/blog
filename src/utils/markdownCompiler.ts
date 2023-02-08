@@ -47,6 +47,10 @@ export const getCachedPage = async (slug: string, year: number) => {
   return existingCacheData.find((x) => x.slug === slug && x.year === year);
 };
 
+/**
+ * Build all markdown pages and store them in a file cache. This greatly speeds up subsequent builds.
+ * @returns
+ */
 export const compileAndCacheMarkdown = async () => {
   const contentHash = await getFileHashes();
   const cacheFilename = `markdown-cache.${contentHash[0].hash}`;
