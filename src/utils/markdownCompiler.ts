@@ -63,13 +63,15 @@ export const compileAndCacheMarkdown = async () => {
 
   const processedFiles = await Promise.all(
     filePaths.map(async (x) => {
-      console.log(contentHash);
-
       const [_, section, year, slug] = pathRegex.exec(x)!;
+      console.log('1');
+
       const fileHash = contentHash.find((x) => x.name.includes(slug));
+      console.log('2');
+
       const processedFile = await createPageFromMarkdown(section, year, slug);
 
-      console.log('after init ');
+      console.log('3');
 
       return {
         filepath: x,
