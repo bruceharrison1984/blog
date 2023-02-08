@@ -49,7 +49,6 @@ export const getStaticProps: GetStaticProps<
   { year: string; slug: string }
 > = async (props) => {
   const { params } = props;
-  const posts = await getPosts('posts');
   const pageContent = await getCachedPage(
     params!.slug,
     Number.parseInt(params!.year)
@@ -58,7 +57,7 @@ export const getStaticProps: GetStaticProps<
   return {
     props: {
       pageContent: pageContent?.pageContent,
-      postMetadata: posts.find((x) => x.currentUrl.includes(params!.slug)),
+      postMetadata: pageContent?.metadata,
     },
   };
 };

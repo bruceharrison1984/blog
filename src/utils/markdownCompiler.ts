@@ -83,8 +83,30 @@ export const compileAndCacheMarkdown = async () => {
     (x, y) => y.metadata.date.valueOf() - x.metadata.date.valueOf()
   );
 
-  writeFileSync(cacheFilename, JSON.stringify(sortedProcessedFiles, null, 2));
-  return sortedProcessedFiles;
+  const processedFilesWithSiblings = sortedProcessedFiles.map((x, i) => {
+    const previousPost = sortedProcessedFiles[i + 1];
+    const nextPost = sortedProcessedFiles[i - 1];
+
+    if (previousPost)
+      x.metadata.previousPost = {
+        title: previousPost.metadata.title,
+        url: previousPost.url,
+      };
+
+    if (nextPost)
+      x.metadata.nextPost = {
+        title: nextPost.metadata.title,
+        url: nextPost.url,
+      };
+
+    return x;
+  });
+
+  writeFileSync(
+    cacheFilename,
+    JSON.stringify(processedFilesWithSiblings, null, 2)
+  );
+  return processedFilesWithSiblings;
 };
 
 export const createPageFromMarkdown = async (
