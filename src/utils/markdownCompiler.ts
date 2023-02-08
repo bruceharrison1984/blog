@@ -20,6 +20,7 @@ type MarkdownFile = {
   slug: string;
   hash: string;
   pageContent: string;
+  metadata: DocumentMetadata;
 };
 
 /** We have to override the type so mdx-bundler can make use of this plugin */
@@ -27,7 +28,7 @@ const imageSizeWrapper = imageSize as Plugin<[Options] | void[], Root, string>;
 
 const pathRegex = new RegExp(/\\(.*)\\(\d{4})\\(.*).md$/);
 
-export const getCachedPage = async (slug: string) => {
+export const getCachedPage = async (slug: string, year: number) => {
   const contentHash = await getFileHashes();
   const cacheFilename = `markdown-cache.${contentHash[0].hash}`;
 
@@ -36,7 +37,7 @@ export const getCachedPage = async (slug: string) => {
 
   const cacheFile = readFileSync(cacheFilename);
   const existingCacheData = JSON.parse(cacheFile.toString()) as MarkdownFile[];
-  return existingCacheData.find((x) => x.slug === slug);
+  return existingCacheData.find((x) => x.slug === slug && x.year === year);
 };
 
 export const compileAndCacheMarkdown = async () => {
@@ -66,7 +67,8 @@ export const compileAndCacheMarkdown = async () => {
         year: Number.parseInt(year),
         slug: slug,
         hash: fileHash?.hash,
-        pageContent: processedFile,
+        pageContent: processedFile.code,
+        metadata: processedFile.frontmatter,
       } as MarkdownFile;
     })
   );
@@ -81,7 +83,7 @@ export const createPageFromMarkdown = async (
   slug: string,
   baseDir = 'content'
 ) => {
-  const { code } = await bundleMDX<DocumentMetadata>({
+  const { code, frontmatter } = await bundleMDX<DocumentMetadata>({
     file: `${[baseDir, directoryPath, year, slug].join('/')}.md`,
     cwd: process.cwd(),
     mdxOptions: (o) => {
@@ -102,7 +104,7 @@ export const createPageFromMarkdown = async (
     },
   });
 
-  return code;
+  return { code, frontmatter };
 };
 
 /**

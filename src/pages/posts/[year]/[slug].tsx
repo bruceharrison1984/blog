@@ -50,7 +50,10 @@ export const getStaticProps: GetStaticProps<
 > = async (props) => {
   const { params } = props;
   const posts = await getPosts('posts');
-  const pageContent = await getCachedPage(params!.slug);
+  const pageContent = await getCachedPage(
+    params!.slug,
+    Number.parseInt(params!.year)
+  );
 
   return {
     props: {
