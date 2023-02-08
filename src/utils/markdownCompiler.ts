@@ -65,7 +65,10 @@ export const compileAndCacheMarkdown = async () => {
     filePaths.map(async (x) => {
       console.log(x);
 
-      const [_, section, year, slug] = pathRegex.exec(x)!;
+      const regexResult = pathRegex.exec(x);
+      if (!regexResult) throw new Error('Regex path parsing failed!');
+
+      const [_, section, year, slug] = regexResult;
       console.log('1');
 
       const fileHash = contentHash.find((x) => x.name.includes(slug));
