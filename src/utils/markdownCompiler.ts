@@ -59,7 +59,9 @@ export const compileAndCacheMarkdown = async () => {
     return existingCacheData;
   }
 
-  const filePaths = await recursiveRead(CONTENT_DIR);
+  const filePaths = await (
+    await recursiveRead(CONTENT_DIR)
+  ).map((x) => x.replace('/', '\\')); // make paths cross-platform
 
   const processedFiles = await Promise.all(
     filePaths.map(async (x) => {
