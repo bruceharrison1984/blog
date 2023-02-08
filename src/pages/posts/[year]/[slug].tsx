@@ -3,7 +3,10 @@ import { GetStaticPaths, GetStaticProps, NextPage } from 'next';
 import { MarkdownNextImage } from '@/components/markdownNextImage/MarkdownNextImage';
 import { PostFooter } from '@/components/postFooter/postFooter';
 import { TableOfContents } from '@/components/tableOfContents/TableOfContents';
-import { compileAndCacheMarkdown } from '@/utils/markdownCompiler';
+import {
+  compileAndCacheMarkdown,
+  getCachedPage,
+} from '@/utils/markdownCompiler';
 import {
   createPageFromMarkdown,
   recursivelyGetMarkdownFiles,
@@ -47,25 +50,21 @@ export const getStaticProps: GetStaticProps<
 > = async (props) => {
   const { params } = props;
   const posts = await getPosts('posts');
-  const pageContent = await createPageFromMarkdown(
-    'posts',
-    params!.year,
-    params!.slug
-  );
+  const pageContent = await getCachedPage(params!.slug);
 
   return {
     props: {
-      pageContent,
+      pageContent: pageContent?.pageContent,
       postMetadata: posts.find((x) => x.currentUrl.includes(params!.slug)),
     },
   };
 };
 
 export const getStaticPaths: GetStaticPaths = async () => {
-  await compileAndCacheMarkdown();
+  const processedMarkdown = await compileAndCacheMarkdown();
 
   return {
-    paths: await recursivelyGetMarkdownFiles('posts'),
+    paths: processedMarkdown.map((x) => x.url),
     fallback: false,
   };
 };

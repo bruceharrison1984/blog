@@ -27,6 +27,18 @@ const imageSizeWrapper = imageSize as Plugin<[Options] | void[], Root, string>;
 
 const pathRegex = new RegExp(/\\(.*)\\(\d{4})\\(.*).md$/);
 
+export const getCachedPage = async (slug: string) => {
+  const contentHash = await getFileHashes();
+  const cacheFilename = `markdown-cache.${contentHash[0].hash}`;
+
+  if (!existsSync(cacheFilename))
+    throw new Error('Page cache could not be located!');
+
+  const cacheFile = readFileSync(cacheFilename);
+  const existingCacheData = JSON.parse(cacheFile.toString()) as MarkdownFile[];
+  return existingCacheData.find((x) => x.slug === slug);
+};
+
 export const compileAndCacheMarkdown = async () => {
   const contentHash = await getFileHashes();
   const cacheFilename = `markdown-cache.${contentHash[0].hash}`;
@@ -37,7 +49,6 @@ export const compileAndCacheMarkdown = async () => {
     const existingCacheData = JSON.parse(
       cacheFile.toString()
     ) as MarkdownFile[];
-    console.log(existingCacheData);
     return existingCacheData;
   }
 
@@ -51,7 +62,7 @@ export const compileAndCacheMarkdown = async () => {
 
       return {
         filepath: x,
-        url: [section, year, slug].join('/'),
+        url: `/${[section, year, slug].join('/')}`,
         year: Number.parseInt(year),
         slug: slug,
         hash: fileHash?.hash,
