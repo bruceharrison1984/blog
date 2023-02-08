@@ -3,6 +3,7 @@ import { GetStaticPaths, GetStaticProps, NextPage } from 'next';
 import { MarkdownNextImage } from '@/components/markdownNextImage/MarkdownNextImage';
 import { PostFooter } from '@/components/postFooter/postFooter';
 import { TableOfContents } from '@/components/tableOfContents/TableOfContents';
+import { compileAndCacheMarkdown } from '@/utils/markdownCompiler';
 import {
   createPageFromMarkdown,
   recursivelyGetMarkdownFiles,
@@ -60,9 +61,13 @@ export const getStaticProps: GetStaticProps<
   };
 };
 
-export const getStaticPaths: GetStaticPaths = async () => ({
-  paths: await recursivelyGetMarkdownFiles('posts'),
-  fallback: false,
-});
+export const getStaticPaths: GetStaticPaths = async () => {
+  await compileAndCacheMarkdown();
+
+  return {
+    paths: await recursivelyGetMarkdownFiles('posts'),
+    fallback: false,
+  };
+};
 
 export default HowToPage;
