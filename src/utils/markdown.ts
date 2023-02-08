@@ -37,7 +37,7 @@ export const createPageFromMarkdown = async (
   slug: string,
   baseDir = 'content'
 ) => {
-  const { code, frontmatter } = await bundleMDX<DocumentMetadata>({
+  const { code } = await bundleMDX<DocumentMetadata>({
     file: `${[baseDir, directoryPath, year, slug].join('/')}.md`,
     cwd: process.cwd(),
     mdxOptions: (o) => {
@@ -51,12 +51,12 @@ export const createPageFromMarkdown = async (
       ];
       return o;
     },
-    esbuildOptions(options, frontmatter) {
+    esbuildOptions(options) {
       options.minify = true;
       options.target = ['es2020'];
       return options;
     },
   });
 
-  return { metadata: frontmatter, pageContent: code };
+  return code;
 };

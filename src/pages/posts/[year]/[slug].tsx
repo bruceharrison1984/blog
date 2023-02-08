@@ -13,21 +13,17 @@ import { useMemo } from 'react';
 import Head from 'next/head';
 
 type HowToPageProps = {
-  metadata: Record<string, string>;
   pageContent: string;
   postMetadata: DocumentMetadata;
 };
 
-const HowToPage: NextPage<HowToPageProps> = ({
-  metadata,
-  pageContent,
-  postMetadata,
-}) => {
+const HowToPage: NextPage<HowToPageProps> = ({ pageContent, postMetadata }) => {
   const Component = useMemo(() => getMDXComponent(pageContent), [pageContent]);
+  const pageTitle = `${postMetadata.title} | bruce lee harrison`;
   return (
     <>
       <Head>
-        <title>{metadata.title} | bruce lee harrison</title>
+        <title>{pageTitle}</title>
       </Head>
       <div className="md:flex justify-center">
         <div className="flex-1">{/* empty div for layout */}</div>
@@ -50,7 +46,7 @@ export const getStaticProps: GetStaticProps<
 > = async (props) => {
   const { params } = props;
   const posts = await getPosts('posts');
-  const processedMarkdown = await createPageFromMarkdown(
+  const pageContent = await createPageFromMarkdown(
     'posts',
     params!.year,
     params!.slug
@@ -58,8 +54,7 @@ export const getStaticProps: GetStaticProps<
 
   return {
     props: {
-      metadata: processedMarkdown.metadata,
-      pageContent: processedMarkdown.pageContent,
+      pageContent,
       postMetadata: posts.find((x) => x.currentUrl.includes(params!.slug)),
     },
   };
