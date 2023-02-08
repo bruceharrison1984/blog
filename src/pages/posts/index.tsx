@@ -1,6 +1,7 @@
 import { GetStaticProps, NextPage } from 'next';
 import { PostListItemProps } from '@/components/postList/PostListItem';
 import { getPosts } from '@/utils/postFetcher';
+import Head from 'next/head';
 import PostList from '@/components/postList/PostList';
 
 type PostsPageProps = {
@@ -8,9 +9,14 @@ type PostsPageProps = {
 };
 
 const PostsPage: NextPage<PostsPageProps> = ({ posts }) => (
-  <div className="mb-10">
-    <PostList items={posts || []} />
-  </div>
+  <>
+    <Head>
+      <title>posts | bruce lee harrison</title>
+    </Head>
+    <div className="mb-10">
+      <PostList items={posts || []} />
+    </div>
+  </>
 );
 
 export const getStaticProps: GetStaticProps = async () => {

@@ -27,7 +27,7 @@ const HowToPage: NextPage<HowToPageProps> = ({
   return (
     <>
       <Head>
-        <title>{metadata.title}</title>
+        <title>{metadata.title} | bruce lee harrison</title>
       </Head>
       <div className="md:flex justify-center">
         <div className="flex-1">{/* empty div for layout */}</div>
