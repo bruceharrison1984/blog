@@ -31,7 +31,7 @@ const pathRegex = new RegExp(/\\(.*)\\(\d{4})\\(.*).md$/);
 
 export const getCache = async () => {
   const contentHash = await getFileHashes();
-  const cacheFilename = `markdown-cache.${contentHash[0].hash}`;
+  const cacheFilename = `markdown-cache.${contentHash[0].hash.slice(0, 6)}`;
 
   if (!existsSync(cacheFilename))
     throw new Error('Page cache could not be located!');
@@ -67,15 +67,14 @@ export const getCachedPage = async (slug: string, year: number) => {
  */
 export const compileAndCacheMarkdown = async () => {
   const contentHash = await getFileHashes();
-  const cacheFilename = `markdown-cache.${contentHash[0].hash}`;
+  const cacheFilename = `markdown-cache.${contentHash[0].hash.slice(0, 6)}`;
 
-  let existingCache: MarkdownFile[];
   if (existsSync(cacheFilename)) {
     const cacheFile = readFileSync(cacheFilename);
     const existingCacheData = JSON.parse(
       cacheFile.toString()
     ) as MarkdownFile[];
-    existingCache = existingCacheData;
+    return existingCacheData;
   }
 
   const filePaths = await (
