@@ -1,6 +1,6 @@
 import { GetStaticProps, NextPage } from 'next';
 import { PostListItemProps } from '@/components/postList/PostListItem';
-import { getPosts } from '@/utils/postFetcher';
+import { getPosts } from '@/utils/markdownCompiler';
 import Head from 'next/head';
 import PostList from '@/components/postList/PostList';
 
@@ -20,16 +20,16 @@ const PostsPage: NextPage<PostsPageProps> = ({ posts }) => (
 );
 
 export const getStaticProps: GetStaticProps = async () => {
-  const postMetadata = await getPosts('posts', 'content');
+  const postMetadata = await getPosts();
   return {
     props: {
       posts: postMetadata.map<PostListItemProps>((x) => ({
-        title: x.title,
-        imageSrc: x.headerImage!,
-        description: x.metaDesc,
-        url: x.currentUrl,
-        tags: x.tags,
-        publishDate: x.date,
+        title: x.metadata.title,
+        imageSrc: x.metadata.headerImage!,
+        description: x.metadata.metaDesc,
+        url: x.url,
+        tags: x.metadata.tags,
+        publishDate: new Date(x.metadata.date),
       })),
     },
   };

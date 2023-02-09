@@ -4,7 +4,6 @@ export type DocumentMetadata = {
   headerImage?: string;
   date: Date;
   tags?: string[];
-  currentUrl: string;
   previousPost?: SiblingDocument;
   nextPost?: SiblingDocument;
 };

@@ -29,13 +29,7 @@ const imageSizeWrapper = imageSize as Plugin<[Options] | void[], Root, string>;
 
 const pathRegex = new RegExp(/\\(.*)\\(\d{4})\\(.*).md$/);
 
-/**
- * Retrieve a page out of the build cache
- * @param slug Name of the slug to match
- * @param year Name of the year to match
- * @returns MarkdownFile object
- */
-export const getCachedPage = async (slug: string, year: number) => {
+export const getCache = async () => {
   const contentHash = await getFileHashes();
   const cacheFilename = `markdown-cache.${contentHash[0].hash}`;
 
@@ -43,7 +37,27 @@ export const getCachedPage = async (slug: string, year: number) => {
     throw new Error('Page cache could not be located!');
 
   const cacheFile = readFileSync(cacheFilename);
-  const existingCacheData = JSON.parse(cacheFile.toString()) as MarkdownFile[];
+  return JSON.parse(cacheFile.toString()) as MarkdownFile[];
+};
+
+/**
+ * Get a list of posts from the cache
+ * @param limit Max number of posts to return
+ * @returns Array of Markdown Files
+ */
+export const getPosts = async (limit?: number) => {
+  const existingCacheData = await getCache();
+  return existingCacheData.slice(0, limit || existingCacheData.length);
+};
+
+/**
+ * Retrieve a page out of the build cache
+ * @param slug Name of the slug to match
+ * @param year Name of the year to match
+ * @returns MarkdownFile object
+ */
+export const getCachedPage = async (slug: string, year: number) => {
+  const existingCacheData = await getCache();
   return existingCacheData.find((x) => x.slug === slug && x.year === year);
 };
 
@@ -55,13 +69,13 @@ export const compileAndCacheMarkdown = async () => {
   const contentHash = await getFileHashes();
   const cacheFilename = `markdown-cache.${contentHash[0].hash}`;
 
+  let existingCache: MarkdownFile[];
   if (existsSync(cacheFilename)) {
-    console.info("\n-= Files haven't changed, using cache =-");
     const cacheFile = readFileSync(cacheFilename);
     const existingCacheData = JSON.parse(
       cacheFile.toString()
     ) as MarkdownFile[];
-    return existingCacheData;
+    existingCache = existingCacheData;
   }
 
   const filePaths = await (
@@ -71,6 +85,7 @@ export const compileAndCacheMarkdown = async () => {
   const processedFiles = await Promise.all(
     filePaths.map(async (x) => {
       const regexResult = pathRegex.exec(x);
+
       if (!regexResult) throw new Error('Regex path parsing failed!');
 
       const [_, section, year, slug] = regexResult;
