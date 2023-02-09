@@ -32,7 +32,9 @@ export const RepoListItem = ({
             width={48}
             quality={100}
             className="my-auto mx-5"
-            sizes="(max-width: 768px) 100vw,(max-width: 1200px) 50vw,33vw"
+            sizes="(max-width: 768px) 25vw,
+                   (max-width: 1200px) 50vw, 
+                   75vw"
           />
         </div>
       </div>

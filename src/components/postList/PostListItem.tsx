@@ -41,7 +41,9 @@ export const PostListItem = ({
           fill
           quality={100}
           className="object-cover z-0"
-          sizes="(max-width: 768px) 100vw,(max-width: 1200px) 50vw,33vw"
+          sizes="(max-width: 768px) 25vw,
+                 (max-width: 1200px) 50vw, 
+                 75vw"
         />
       </div>
       <div className="md:border-r md:border-b md:border-l md:border-t w-full border-black border-opacity-10 rounded-b-none rounded-r-lg p-2 flex flex-col justify-between leading-normal space-y-2 overflow-hidden">
