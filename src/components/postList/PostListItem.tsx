@@ -8,6 +8,7 @@ export type PostListItemProps = {
   url: string;
   tags?: string[];
   publishDate: Date;
+  priorityImage?: boolean;
 };
 
 export const PostListItem = ({
@@ -17,6 +18,7 @@ export const PostListItem = ({
   url,
   tags,
   publishDate,
+  priorityImage,
 }: PostListItemProps) => {
   const serverSafeDate = `${publishDate.getUTCMonth() + 1}/${
     publishDate.getUTCDate() + 1
@@ -44,6 +46,7 @@ export const PostListItem = ({
           sizes="(max-width: 768px) 25vw,
                  (max-width: 1200px) 50vw, 
                  75vw"
+          priority={priorityImage}
         />
       </div>
       <div className="md:border-r md:border-b md:border-l md:border-t w-full border-black border-opacity-10 rounded-b-none rounded-r-lg p-2 flex flex-col justify-between leading-normal space-y-2 overflow-hidden">
