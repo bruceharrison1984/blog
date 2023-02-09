@@ -16,7 +16,7 @@ const PostList = ({ items }: PostListProps) => (
           description={description}
           tags={tags}
           publishDate={publishDate}
-          priorityImage={i >= 3}
+          priorityImage={i <= 3}
         />
       )
     )}
