@@ -1,7 +1,8 @@
 import { DocumentMetadata } from '@/types/DocumentMetadata';
-import { HashElementNode, hashElement } from 'folder-hash';
+import { MarkdownFile } from '@/types/MarkdownFile';
 import { bundleMDX } from 'mdx-bundler';
 import { existsSync, readFileSync, writeFileSync } from 'fs';
+import { getCache, getFileHashes } from './markdownCache';
 import imageSize, { Options } from 'rehype-img-size';
 import recursiveRead from 'recursive-readdir';
 import rehypeAutolinkHeadings from 'rehype-autolink-headings';
@@ -13,32 +14,10 @@ import type { Root } from 'hast';
 
 const CONTENT_DIR = 'content';
 
-type MarkdownFile = {
-  filepath: string;
-  section: string;
-  url: string;
-  year: number;
-  slug: string;
-  hash: string;
-  pageContent: string;
-  metadata: DocumentMetadata;
-};
-
 /** We have to override the type so mdx-bundler can make use of this plugin */
 const imageSizeWrapper = imageSize as Plugin<[Options] | void[], Root, string>;
 
 const pathRegex = new RegExp(/\\(.*)\\(\d{4})\\(.*).md$/);
-
-export const getCache = async () => {
-  const contentHash = await getFileHashes();
-  const cacheFilename = `markdown-cache.${contentHash[0].hash.slice(0, 6)}`;
-
-  if (!existsSync(cacheFilename))
-    throw new Error('Page cache could not be located!');
-
-  const cacheFile = readFileSync(cacheFilename);
-  return JSON.parse(cacheFile.toString()) as MarkdownFile[];
-};
 
 /**
  * Get a list of posts from the cache
@@ -166,27 +145,4 @@ export const createPageFromMarkdown = async (
   });
 
   return { pageContent: code, metadata: frontmatter };
-};
-
-/**
- * Gets a list of all files and their hashes from the content directory
- * @returns
- */
-const getFileHashes = async () => {
-  const contentHash = await hashElement('./content', {
-    files: { include: ['*.md'] },
-  });
-
-  const flattenNodes: (hashNode: HashElementNode) => HashElementNode[] = (
-    hashNode: HashElementNode
-  ) => {
-    const hashes: HashElementNode[] = [hashNode];
-    for (let index = 0; index < hashNode?.children?.length; index++) {
-      hashes.push(...flattenNodes(hashNode.children[index]));
-    }
-
-    return hashes;
-  };
-
-  return flattenNodes(contentHash);
 };
