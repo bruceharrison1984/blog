@@ -15,7 +15,7 @@ type HomePageProps = {
 
 const Home: NextPage<HomePageProps> = ({ posts, repos, certifications }) => {
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 mb-10">
       <div>
         <div className="flex flex-col items-center">
           <h2 className="w-full lg:w-2/3 font-bold mb-2">Posts</h2>
