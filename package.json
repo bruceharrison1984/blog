@@ -37,7 +37,7 @@
     "gray-matter": "^4.0.3",
     "next-sitemap": "^3.1.49",
     "next-superjson-plugin": "^0.5.2",
-    "postcss": "^8.4.20",
+    "postcss": "^8.4.31",
     "prettier": "^2.8.3",
     "recursive-readdir": "^2.2.3",
     "rehype-autolink-headings": "^6.1.1",
